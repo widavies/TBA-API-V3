@@ -7,9 +7,9 @@ import lombok.Data;
  */
 public class DistrictRanking {
     private String teamKey;
-    private int rank;
-    private int rookieBonus;
-    private int pointTotal;
+    private long rank;
+    private long rookieBonus;
+    private long pointTotal;
 
     /**
      * List of events that contributed to the point total for the team.
@@ -29,23 +29,23 @@ public class DistrictRanking {
         /**
          * Points awarded for alliance selection.
          */
-        private int alliancePoints;
+        private long alliancePoints;
         /**
          * Points awarded for event awards.
          */
-        private int awardPoints;
+        private long awardPoints;
         /**
          * Points awarded for qualification match performance.
          */
-        private int qualPoints;
+        private long qualPoints;
         /**
          * Points awarded for elimination match performance.
          */
-        private int elimPoints;
+        private long elimPoints;
         /**
          * Total points awarded at this event.
          */
-        private int total;
+        private long total;
     }
 
 }

@@ -12,11 +12,11 @@ public class APIStatus {
     /**
      * Year of the current FRC season.
      */
-    private int currentSeason;
+    private long currentSeason;
     /**
      * Maximum FRC season year for valid queries.
      */
-    private int maxSeason;
+    private long maxSeason;
     /**
      * True if the entire FMS API provided by FIRST is down.
      */
@@ -25,18 +25,10 @@ public class APIStatus {
      * An array of strings containing event keys of any active events that are no longer updating.
      */
     private String[] downEvents;
-    private APIStatusAppVersion ios;
-    private APIStatusAppVersion android;
+    private long iosMinAppVersion;
+    private long iosLatestAppVersion;
+    private long androidMinAppVersion;
+    private long androidLatestAppVersion;
 
-    @Data
-    private class APIStatusAppVersion {
-        /**
-         * Internal use - Minimum application version required to correctly connect and process data.
-         */
-        private int minAppVersion;
-        /**
-         * Internal use - Latest application version available.
-         */
-        private int latestAppVersion;
-    }
+
 }

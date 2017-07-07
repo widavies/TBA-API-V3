@@ -11,13 +11,13 @@ public class WLTRecord {
     /**
      * Number of losses.
      */
-    private int losses;
+    private long losses;
     /**
      * Number of wins.
      */
-    private int wins;
+    private long wins;
     /**
      * Number of ties.
      */
-    private int ties;
+    private long ties;
 }

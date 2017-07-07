@@ -31,11 +31,11 @@ public class Team extends STeam {
     /**
      * Will be NULL, for future development.
      */
-    private int latitude;
+    private Double latitude;
     /**
      * Will be NULL, for future development.
      */
-    private int longitude;
+    private Double longitude;
     /**
      * Will be NULL, for future development.
      */
@@ -47,14 +47,9 @@ public class Team extends STeam {
     /**
      * First year the team officially competed.
      */
-    private int rookieYear;
+    private long rookieYear;
     /**
      * Team’s motto as provided by FIRST.
      */
     private String motto;
-    /**
-     *
-     Location of the team’s home championship each year as a key-value pair. The year (as a string) is the key, and the city is the value.
-     */
-    private HashMap<Integer, String> homeChampionship;
 }

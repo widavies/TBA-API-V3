@@ -23,6 +23,6 @@ public class DistrictList {
     /**
      * Year this district participated.
      */
-    private int year;
+    private long year;
 
 }

@@ -10,19 +10,19 @@ public class Ranking {
     /**
      * Number of times disqualified.
      */
-    private int dq;
+    private long dq;
     /**
      * Number of matches played by this team.
      */
-    private int matchesPlayed;
+    private long matchesPlayed;
     /**
      * The average match score during qualifications. Year specific. May be null if not relevant for a given year.
      */
-    private int qualAverage;
+    private long qualAverage;
     /**
      * The team’s rank at the event as provided by FIRST.
      */
-    private int rank;
+    private long rank;
     /**
      *
      Win-Loss-Tie record information, if available. May be null.
@@ -36,7 +36,7 @@ public class Ranking {
     /**
      * Additional year-specific information, may be null. See parent `sort_order_info` for details.
      */
-    private int[] sortOrders;
+    private long[] sortOrders;
     /**
      * The team with this rank.
      */

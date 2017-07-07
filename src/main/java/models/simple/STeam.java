@@ -17,7 +17,7 @@ public class STeam {
     /**
      * Official team number issued by FIRST.
      */
-    private int teamNumber;
+    private long teamNumber;
     /**
      * Team nickname provided by FIRST.
      */

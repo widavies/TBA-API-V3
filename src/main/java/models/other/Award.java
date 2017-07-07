@@ -11,7 +11,7 @@ public class Award {
     /**
      * Type of award given. See https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/award_type.py#L6
      */
-    private int awardType;
+    private long awardType;
     /**
      * The event_key of the event the award was won at.
      */
@@ -23,5 +23,5 @@ public class Award {
     /**
      * The year this award was won.
      */
-    private int year;
+    private long year;
 }

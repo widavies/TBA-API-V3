@@ -12,5 +12,5 @@ import lombok.Data;
 @Data
 public class SortInfo {
     private String name;
-    private int precision;
+    private long precision;
 }
