@@ -13,7 +13,7 @@ public class Match extends SMatch {
     /**
      * UNIX timestamp (seconds since 1-Jan-1970 00:00:00) when the match result was posted.
      */
-    private int postResultTime;
+    private long postResultTime;
     /**
      *
      Score breakdown for auto, teleop, etc. points. Varies from year to year. May be null.

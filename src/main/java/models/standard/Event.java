@@ -19,11 +19,11 @@ import models.simple.SEvent;
 public class Event extends SEvent {
 
     /**
-     * Same as name but doesn’t include event specifiers, such as ‘Regional’ or 'DistrictList’. May be null.
+     * Same as name but doesn’t include event specifiers, such as ‘Regional’ or 'District’. May be null.
      */
     private String shortName;
     /**
-     * Event Type, eg Regional, DistrictList, or Offseason.
+     * Event Type, eg Regional, District, or Offseason.
      */
     private String eventTypeString;
     /**
@@ -33,7 +33,7 @@ public class Event extends SEvent {
     /**
      * The FIRST internal Event ID, used to link to the event on the FRC webpage.
      */
-    private int firstEventID;
+    private long firstEventID;
     /**
      * The TBA Event key that represents the event’s parent. Used to link back to the event from a division event. It is also the inverse relation of divison_keys.
      */
@@ -41,7 +41,7 @@ public class Event extends SEvent {
     /**
      * Playoff Type, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/playoff_type.py#L4, or null.
      */
-    private int playoffType;
+    private long playoffType;
     /**
      * String representation of the playoff_type, or null.
      */
@@ -86,7 +86,7 @@ public class Event extends SEvent {
     /**
      * Week of the competition season this event is in.
      */
-    private int week;
+    private long week;
     /**
      * Timezone name.
      */

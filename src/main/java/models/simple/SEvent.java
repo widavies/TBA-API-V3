@@ -1,7 +1,7 @@
 package models.simple;
 
 import lombok.Data;
-import models.other.DistrictList;
+import models.other.teams.District;
 
 /**
  * This is the Simple Event Model, as defined by the V3 TBA api.
@@ -26,12 +26,12 @@ public class SEvent {
     /**
      * Event Type, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/event_type.py#L2
      */
-    private int eventType;
+    private long eventType;
 
     /**
      * Districts array
      */
-    private DistrictList[] districtsList;
+    private District[] districtsList;
 
     /**
      * State or Province the event is located in.
@@ -53,5 +53,5 @@ public class SEvent {
     /**
      * Year the event data is for.
      */
-    private int year;
+    private long year;
 }

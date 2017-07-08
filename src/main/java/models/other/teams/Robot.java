@@ -3,11 +3,11 @@ package models.other.teams;
 import lombok.Data;
 
 @Data
-public class TeamRobot {
+public class Robot {
     /**
      * Year this robot competed in.
      */
-    private int year;
+    private long year;
     /**
      * Name of the robot as provided by the team.
      */

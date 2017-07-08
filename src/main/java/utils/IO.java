@@ -17,14 +17,14 @@ import java.net.URL;
 public class IO {
     private static final JSONParser parser = new JSONParser();
 
-    public static Object doRequest(String targetURL, String appID) {
+    public static Object doRequest(String targetURL) {
         HttpURLConnection connection = null;
         try {
             URL url = new URL( Constants.URL + targetURL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "TBA-API-V3");
-            connection.setRequestProperty("X-TBA-Auth-Key", appID);
+            connection.setRequestProperty("X-TBA-Auth-Key", Constants.AUTH_TOKEN);
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setRequestProperty("charset", "utf-8");
             connection.setUseCaches(false);

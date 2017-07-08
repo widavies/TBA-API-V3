@@ -1,10 +1,9 @@
 package main;
 
 import models.other.APIStatus;
+import models.simple.STeam;
 import models.standard.Team;
-import utils.Constants;
 import utils.IO;
-import utils.Parser;
 
 /**
  * Created by Will Davies on 7/7/2017.
@@ -12,9 +11,8 @@ import utils.Parser;
 public class Test {
 
     public static void main(String[] args) {
-        Team team = new Parser().parseTeam(IO.doRequest("team/frc5", Constants.AUTH_TOKEN));
-        System.out.println(team.toString()+"\n\n");
-        printTeam(team);
+        System.out.println(IO.doRequest("team/frc27/districts"));
+
     }
 
     private static void printTeam(Team team) {
@@ -35,9 +33,16 @@ public class Test {
         System.out.println("website "+team.getWebsite());
         System.out.println("rookie year: "+team.getRookieYear());
         System.out.println("motto: "+team.getMotto());
+    }
 
-
-
+    private static void printSTeam(STeam team) {
+        System.out.println("Key: "+team.getName());
+        System.out.println("Number: "+team.getTeamNumber());
+        System.out.println("Nickname: "+team.getNickname());
+        System.out.println("Name: "+team.getName());
+        System.out.println("City: "+team.getCity());
+        System.out.println("State/Province: "+team.getStateProv());
+        System.out.println("Country: "+team.getCountry());
     }
 
     private static void printStatus(APIStatus status) {

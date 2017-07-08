@@ -21,11 +21,11 @@ public class SMatch {
     /**
      * The set number in a series of matches where more than one match is required in the match series.
      */
-    private int setNumber;
+    private long setNumber;
     /**
      * The match number of the match in the competition level.
      */
-    private int matchNumber;
+    private long matchNumber;
     /**
      * A list of alliances, the teams on the alliances, and their score.
      */
@@ -45,13 +45,13 @@ public class SMatch {
     /**
      * UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of the scheduled match time, as taken from the published schedule.
      */
-    private int time;
+    private long time;
     /**
      * UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of the TBA predicted match start time.
      */
-    private int predictedTime;
+    private long predictedTime;
     /**
      * UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of actual match start time.
      */
-    private int actualTime;
+    private long actualTime;
 }

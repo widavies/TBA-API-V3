@@ -31,11 +31,11 @@ public class Team extends STeam {
     /**
      * Will be NULL, for future development.
      */
-    private Double latitude;
+    private double latitude;
     /**
      * Will be NULL, for future development.
      */
-    private Double longitude;
+    private double longitude;
     /**
      * Will be NULL, for future development.
      */

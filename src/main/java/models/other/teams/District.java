@@ -1,4 +1,4 @@
-package models.other;
+package models.other.teams;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @author Will Davies
  */
 @Data
-public class DistrictList {
+public class District {
     /**
      * The short identifier for the district.
      */
