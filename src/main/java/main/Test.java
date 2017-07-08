@@ -13,7 +13,7 @@ import utils.IO;
 public class Test {
 
     public static void main(String[] args) {
-        System.out.println(IO.doRequest("event/2016casd/oprs"));
+        System.out.println(IO.doRequest("districts/2017"));
 
 
 
