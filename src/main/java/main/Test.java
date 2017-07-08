@@ -3,6 +3,8 @@ package main;
 import models.other.APIStatus;
 import models.simple.STeam;
 import models.standard.Team;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import utils.IO;
 
 /**
@@ -11,7 +13,9 @@ import utils.IO;
 public class Test {
 
     public static void main(String[] args) {
-        System.out.println(IO.doRequest("team/frc27/districts"));
+        System.out.println(IO.doRequest("event/2016casd/oprs"));
+
+
 
     }
 

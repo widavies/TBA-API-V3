@@ -5,6 +5,7 @@ import models.other.APIStatus;
 import models.other.Award;
 import models.other.AwardRecipient;
 import models.other.Media;
+import models.other.events.EventOPR;
 import models.other.events.Webcast;
 import models.other.matches.MatchAlliance;
 import models.other.teams.District;
@@ -271,7 +272,22 @@ public class Parser {
         return a;
     }
 
+    public EventOPR[] parseOPRs(Object object) {
+        HashMap hash = (HashMap) object;
+        JSONObject oprs = (JSONObject) hash.get("oprs");
+        JSONObject dprs = (JSONObject) hash.get("dprs");
+        JSONObject ccwms = (JSONObject) hash.get("ccwms");
+        EventOPR[] toReturn = new EventOPR[oprs.size()];
+        for(int i = 0; i < oprs.keySet().size(); i++) {
+            EventOPR opr = new EventOPR();
+            opr.setOpr(Utils.cleanDouble(oprs.get(oprs.keySet().toArray()[i])));
+            opr.setDpr(Utils.cleanDouble(dprs.get(dprs.keySet().toArray()[i])));
+            opr.setCcwm(Utils.cleanDouble(ccwms.get(ccwms.keySet().toArray()[i])));
+            toReturn[i] = opr;
+        }
 
+        return toReturn;
+    }
 
 
 }

@@ -16,14 +16,11 @@ import utils.Parser;
 import utils.Utils;
 
 /**
- * TeamRequest manages all the API calls, in order, as listed on https://www.thebluealliance.com/apidocs/v3 under
- * the 'teams' section.
- *
- * Important:
- *
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /teams/ or /team/
- * will be accessed from this class. This class currently implements all of them expect for: /team/{team_key}/event/{event_key}/status (coming soon)
+ * will be accessed from this class.
  *
+ * API calls not implemented yet:
+ * /team/{team_key}/event/{event_key}/status
  *
  * @since 1.0.0
  * @author Will Davies
@@ -32,6 +29,8 @@ import utils.Utils;
 public class TeamRequest extends Parser {
 
     /**
+     * Mirror of: /teams/{page_num}
+     *
      * Gets a list of Team objects, paginated in groups of 500.
      * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return list of Team objects (full team models)
@@ -45,6 +44,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /teams/{page_num}/simple
+     *
      * Gets a list of STeam objects, paginated in groups of 500.
      * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return list of STeam objects (simple team models)
@@ -58,6 +59,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /teams/{page_num}/keys
+     *
      * Gets a list of Team keys, paginated in groups of 500. (Note, each page will not have 500 teams, but will include the teams within that range of 500.)
      * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return String[] of team keys in the format 'frc254'
@@ -68,6 +71,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /teams/{year}/{page_num}
+     *
      * Gets a list of Team objects that competed in the given year, paginated in groups of 500.
      * @param year the year to get teams from
      * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
@@ -82,6 +87,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /teams/{year}/{page_num}/simple
+     *
      * Gets a list of Team objects that competed in the given year, paginated in groups of 500.
      * @param year the year to get teams from
      * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
@@ -96,6 +103,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{year}/{page_num}/keys
+     *
      * Gets a list Team Keys that competed in the given year, paginated in groups of 500.
      * @param year the year to get teams from
      * @return String[] of team keys in format 'frc254'
@@ -106,6 +115,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}
+     *
      * Gets the specified team (full team model)
      * @param number the team's frc number
      * @return Team object (full model)
@@ -115,6 +126,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team{team_key}/simple
+     *
      * Gets the specified team (simple team model)
      * @param number the team's frc number
      * @return STeam object (simple model)
@@ -124,6 +137,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/years_participated
+     *
      * Returns an array containing the years that a particular team participated in FRC events
      * @param number the team's frc number
      * @return long[] containing years participated
@@ -140,6 +155,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/districts
+     *
      * Gets the districts this team was in, empty array if none
      * @param number the team's frc number
      * @return District[] containing a District object for each district this team was in
@@ -149,6 +166,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team{team_key}/robots
+     *
      * Gets the robots that this team has had
      * @param number the team's frc number
      * @return Robot[] containing a Robot object for each robot this team has built
@@ -158,6 +177,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/events
+     *
      * Gets a list of all events this team has competed at.
      * @param number the team's frc number
      * @return Event[] containing an Event object for each event this team was in
@@ -173,6 +194,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/events/simple
+     *
      * Gets a list of all events this team has competed at.
      * @param number the team's frc number
      * @return SEvent[] containing an Event object for each event this team was in (simple model)
@@ -188,6 +211,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/events_keys
+     *
      * Gets a list of the event keys for all events this team has competed at.
      * @param number the team's frc number
      * @return String[] containg all the event keys for events this team is in
@@ -198,6 +223,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/events/{year}
+     *
      * Gets a list of events this team has competed at in the given year.
      * @param number the team's frc number
      * @param year the year to get events from
@@ -214,6 +241,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/events/{year}/simple
+     *
      * Gets a short-form list of events this team has competed at in the given year.
      * @param number the team's frc number
      * @param year the year to get events from
@@ -230,6 +259,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/events/{year}/keys
+     *
      * Gets a list of the event keys for events this team has competed at in the given year.
      * @param number the team's frc number
      * @param year the year to get events from
@@ -241,6 +272,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/event/{event_key}/matches
+     *
      * Gets a list of matches for the given team and event.
      * @param number the team's frc number
      * @param eventKey the event's key code (example: '2016nytr')
@@ -257,6 +290,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/event/{event_key}/matches/simple
+     *
      * Gets a short-form list of matches for the given team and event.
      * @param number the team's frc number
      * @param eventKey the event's key code (example: '2016nytr')
@@ -273,6 +308,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/event/{event_key}/matches/keys
+     *
      * Gets a list of the event keys for events this team has competed at in the given year.
      * @param number the team's frc number
      * @param eventKey the event's key code (example: '2016nytr')
@@ -284,6 +321,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/event/{event_key}/awards
+     *
      * Gets a list of awards the given team won at the given event.
      * @param number the team's frc number
      * @param eventKey the event's key code (example: '2016nytr')
@@ -298,6 +337,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/awards
+     *
      * Gets a list of awards the given team has won.
      * @param number the team's frc number
      * @return Award[] containing all the awards this team has won
@@ -311,6 +352,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/awards/{year}
+     *
      * Gets a list of awards the given team has won.
      * @param number the team's frc number
      * @param year the year
@@ -325,6 +368,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/matches/{year}
+     *
      * Gets a list of matches for the given team and year.
      * @param number the team's frc number
      * @param year the year
@@ -339,6 +384,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/matches/{year}/simple
+     *
      * Gets a list of matches for the given team and year.
      * @param number the team's frc number
      * @param year the year
@@ -353,6 +400,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/matches/{year}/keys
+     *
      * Gets a list of match keys for matches for the given team and year.
      * @param number the team's frc number
      * @param year the year to get match keys from
@@ -364,6 +413,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/media/{year}
+     *
      * Gets a list of Media (videos / pictures) for the given team and year.
      * @param number the team's frc number
      * @param year the year
@@ -378,6 +429,8 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Mirror of: /team/{team_key}/social_media
+     *
      * Gets a list of Media (social media) for the given team.
      * @param number the team's frc number
      * @return Media[] containing all social media associated with this team
