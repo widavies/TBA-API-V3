@@ -2,10 +2,15 @@ package utils;
 
 import jdk.nashorn.internal.scripts.JO;
 import models.other.APIStatus;
+import models.other.Award;
+import models.other.AwardRecipient;
+import models.other.Media;
 import models.other.events.Webcast;
+import models.other.matches.MatchAlliance;
 import models.other.teams.District;
 import models.other.teams.Robot;
 import models.simple.SEvent;
+import models.simple.SMatch;
 import models.simple.STeam;
 import models.standard.Event;
 import models.standard.Match;
@@ -24,7 +29,7 @@ import java.util.HashMap;
  */
 public class Parser {
 
-    public APIStatus parseStatus(Object object) {
+    protected APIStatus parseStatus(Object object) {
         APIStatus status = new APIStatus();
         HashMap hash = (HashMap) object;
         status.setCurrentSeason((long)hash.get("current_season"));
@@ -39,7 +44,7 @@ public class Parser {
         return status;
     }
 
-    public Team parseTeam(Object object) {
+    protected Team parseTeam(Object object) {
         Team team = new Team();
         HashMap hash = (HashMap) object;
         team.setKey((String)hash.get("key"));
@@ -62,7 +67,7 @@ public class Parser {
         return team;
     }
 
-    public STeam parseSTeam(Object object) {
+    protected STeam parseSTeam(Object object) {
         STeam team = new STeam();
         HashMap hash = (HashMap) object;
         team.setKey((String)hash.get("key"));
@@ -75,7 +80,7 @@ public class Parser {
         return team;
     }
 
-    public District[] parseDistrictList(Object object) {
+    protected District[] parseDistrictList(Object object) {
         JSONArray districtsList = (JSONArray) object;
         District[] districts = new District[districtsList.size()];
         for(int i = 0; i < districtsList.size(); i++) {
@@ -90,7 +95,7 @@ public class Parser {
         return districts;
     }
 
-    public Robot[] parseRobots(Object object) {
+    protected Robot[] parseRobots(Object object) {
         JSONArray robotsList = (JSONArray) object;
         Robot[] robots = new Robot[robotsList.size()];
         for(int i = 0; i < robotsList.size(); i++) {
@@ -105,7 +110,7 @@ public class Parser {
         return robots;
     }
 
-    public Event parseEvent(Object object) {
+    protected Event parseEvent(Object object) {
         Event e = new Event();
         HashMap hash = (HashMap) object;
         e.setKey((String)hash.get("key"));
@@ -151,7 +156,7 @@ public class Parser {
         return e;
     }
 
-    private SEvent parseSEvent(Object object) {
+    protected SEvent parseSEvent(Object object) {
         SEvent e = new SEvent();
         HashMap hash = (HashMap) object;
         e.setKey((String)hash.get("key"));
@@ -167,7 +172,7 @@ public class Parser {
         return e;
     }
 
-    private Match parseMatch(Object object) {
+    protected Match parseMatch(Object object) {
         Match m = new Match();
         HashMap hash = (HashMap) object;
         m.setKey((String)hash.get("key"));
@@ -181,9 +186,87 @@ public class Parser {
         m.setPredictedTime(Utils.cleanLong(hash.get("predicted_time")));
         m.setPostResultTime(Utils.cleanLong(hash.get("post_result_time")));
         JSONObject allies = (JSONObject) hash.get("alliance");
-        return null;
-
-
+        JSONObject blue = (JSONObject) allies.get("blue");
+        JSONObject red = (JSONObject) allies.get("blue");
+        MatchAlliance redAlly = new MatchAlliance();
+        MatchAlliance blueAlly = new MatchAlliance();
+        redAlly.setScore(Utils.cleanLong(red.get("score")));
+        JSONArray redTeamKeys = (JSONArray) red.get("team_keys");
+        JSONArray blueTeamKeys = (JSONArray) blue.get("team_keys");
+        redAlly.setTeamKeys(Arrays.asList(redTeamKeys.toArray()).toArray(new String[redTeamKeys.size()]));
+        blueAlly.setTeamKeys(Arrays.asList(blueTeamKeys.toArray()).toArray(new String[blueTeamKeys.size()]));
+        JSONArray redSurrogateKeys = (JSONArray) red.get("surrogate_team_keys");
+        JSONArray blueSurrogateKeys = (JSONArray) blue.get("surrogate_team_keys");
+        redAlly.setSurrogateTeamKeys(Arrays.asList(redSurrogateKeys.toArray()).toArray(new String[redSurrogateKeys.size()]));
+        blueAlly.setSurrogateTeamKeys(Arrays.asList(blueSurrogateKeys.toArray()).toArray(new String[blueSurrogateKeys.size()]));
+        m.setRed(redAlly);
+        m.setBlue(blueAlly);
+        JSONArray videos = (JSONArray) hash.get("videos");
+        Media[] medias = new Media[videos.size()];
+        for(int i = 0; i < videos.size(); i++) {
+            Media media = new Media();
+            JSONObject obj = (JSONObject) videos.get(i);
+            media.setKey((String)obj.get("key"));
+            media.setType((String)obj.get("type"));
+            media.setForeignKey((String)obj.get("foreign_key"));
+            media.setDetails((String)obj.get("details"));
+            media.setPreferred(Utils.cleanBoolean(obj.get("preferred")));
+            medias[i] = media;
+        }
+        m.setVideos(medias);
+        return m;
     }
+
+    protected SMatch parseSMatch(Object object) {
+        SMatch m = new SMatch();
+        HashMap hash = (HashMap) object;
+        m.setKey((String)hash.get("key"));
+        m.setCompLevel((String)hash.get("comp_level"));
+        m.setSetNumber(Utils.cleanLong(hash.get("set_number")));
+        m.setMatchNumber(Utils.cleanLong(hash.get("match_number")));
+        m.setWinningAlliance((String)hash.get("winning_alliance"));
+        m.setEventKey((String)hash.get("event_key"));
+        m.setTime(Utils.cleanLong(hash.get("time")));
+        m.setActualTime(Utils.cleanLong(hash.get("actual_time")));
+        m.setPredictedTime(Utils.cleanLong(hash.get("predicted_time")));
+        JSONObject allies = (JSONObject) hash.get("alliance");
+        JSONObject blue = (JSONObject) allies.get("blue");
+        JSONObject red = (JSONObject) allies.get("blue");
+        MatchAlliance redAlly = new MatchAlliance();
+        MatchAlliance blueAlly = new MatchAlliance();
+        redAlly.setScore(Utils.cleanLong(red.get("score")));
+        JSONArray redTeamKeys = (JSONArray) red.get("team_keys");
+        JSONArray blueTeamKeys = (JSONArray) blue.get("team_keys");
+        redAlly.setTeamKeys(Arrays.asList(redTeamKeys.toArray()).toArray(new String[redTeamKeys.size()]));
+        blueAlly.setTeamKeys(Arrays.asList(blueTeamKeys.toArray()).toArray(new String[blueTeamKeys.size()]));
+        JSONArray redSurrogateKeys = (JSONArray) red.get("surrogate_team_keys");
+        JSONArray blueSurrogateKeys = (JSONArray) blue.get("surrogate_team_keys");
+        redAlly.setSurrogateTeamKeys(Arrays.asList(redSurrogateKeys.toArray()).toArray(new String[redSurrogateKeys.size()]));
+        blueAlly.setSurrogateTeamKeys(Arrays.asList(blueSurrogateKeys.toArray()).toArray(new String[blueSurrogateKeys.size()]));
+        m.setRed(redAlly);
+        m.setBlue(blueAlly);
+        return m;
+    }
+
+    protected Award parseAward(Object object) {
+        Award a = new Award();
+        HashMap hash = (HashMap)object;
+        a.setName((String)hash.get("name"));
+        a.setAwardType(Utils.cleanLong(hash.get("award_type")));
+        a.setEventKey((String)hash.get("event_key"));
+        a.setYear(Utils.cleanLong(hash.get("year")));
+        JSONArray array = (JSONArray) hash.get("recipient_list");
+        AwardRecipient[] recipientsList = new AwardRecipient[array.size()];
+        for(int i = 0; i < array.size(); i++) {
+            AwardRecipient ar = new AwardRecipient();
+            JSONObject obj = (JSONObject) array.get(i);
+            ar.setAwardee((String)obj.get("awardee"));
+            ar.setTeamKey((String)obj.get("team_key"));
+            recipientsList[i] = ar;
+        }
+        a.setRecipients(recipientsList);
+        return a;
+    }
+
 
 }

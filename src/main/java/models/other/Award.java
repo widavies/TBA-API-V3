@@ -1,8 +1,12 @@
 package models.other;
 
+import lombok.Data;
+
 /**
- * Created by Will Davies on 7/7/2017.
+ * @since 1.0.0
+ * @author Will Davies
  */
+@Data
 public class Award {
     /**
      * The name of the award as provided by FIRST. May vary for the same award type.

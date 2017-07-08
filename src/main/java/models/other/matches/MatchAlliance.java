@@ -11,7 +11,7 @@ public class MatchAlliance {
     /**
      * Score for this alliance. Will be null or -1 for an unplayed match.
      */
-    private int score;
+    private long score;
     /**
      * TBA Team keys (eg frc254) for teams on this alliance.
      */

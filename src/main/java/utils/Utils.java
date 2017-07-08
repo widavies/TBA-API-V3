@@ -15,4 +15,9 @@ public class Utils {
         else return (double)object;
     }
 
+    public static boolean cleanBoolean(Object object) {
+        if(object == null) return false;
+        else return (boolean)object;
+    }
+
 }
