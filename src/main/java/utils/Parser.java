@@ -9,6 +9,7 @@ import models.other.events.Webcast;
 import models.other.matches.MatchAlliance;
 import models.other.teams.District;
 import models.other.teams.Robot;
+import models.other.teams.TeamEventStatus;
 import models.simple.SEvent;
 import models.simple.SMatch;
 import models.simple.STeam;
@@ -172,6 +173,17 @@ public class Parser {
         return e;
     }
 
+    protected Media parseMedia(Object object) {
+        Media media = new Media();
+        HashMap hash = (HashMap)object;
+        media.setKey((String)hash.get("key"));
+        media.setType((String)hash.get("type"));
+        media.setForeignKey((String)hash.get("foreign_key"));
+        media.setDetails((String)hash.get("details"));
+        media.setPreferred(Utils.cleanBoolean(hash.get("preferred")));
+        return media;
+    }
+
     protected Match parseMatch(Object object) {
         Match m = new Match();
         HashMap hash = (HashMap) object;
@@ -203,16 +215,7 @@ public class Parser {
         m.setBlue(blueAlly);
         JSONArray videos = (JSONArray) hash.get("videos");
         Media[] medias = new Media[videos.size()];
-        for(int i = 0; i < videos.size(); i++) {
-            Media media = new Media();
-            JSONObject obj = (JSONObject) videos.get(i);
-            media.setKey((String)obj.get("key"));
-            media.setType((String)obj.get("type"));
-            media.setForeignKey((String)obj.get("foreign_key"));
-            media.setDetails((String)obj.get("details"));
-            media.setPreferred(Utils.cleanBoolean(obj.get("preferred")));
-            medias[i] = media;
-        }
+        for(int i = 0; i < videos.size(); i++) medias[i] = parseMedia(videos.get(i));
         m.setVideos(medias);
         return m;
     }
@@ -267,6 +270,8 @@ public class Parser {
         a.setRecipients(recipientsList);
         return a;
     }
+
+
 
 
 }

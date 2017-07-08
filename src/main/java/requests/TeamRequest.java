@@ -1,6 +1,7 @@
 package requests;
 
 import models.other.Award;
+import models.other.Media;
 import models.other.teams.District;
 import models.other.teams.Robot;
 import models.simple.SEvent;
@@ -12,12 +13,17 @@ import models.standard.Team;
 import org.json.simple.JSONArray;
 import utils.IO;
 import utils.Parser;
-
-import java.util.Arrays;
+import utils.Utils;
 
 /**
  * TeamRequest manages all the API calls, in order, as listed on https://www.thebluealliance.com/apidocs/v3 under
  * the 'teams' section.
+ *
+ * Important:
+ *
+ * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /teams/ or /team/
+ * will be accessed from this class. This class currently implements all of them expect for: /team/{team_key}/event/{event_key}/status (coming soon)
+ *
  *
  * @since 1.0.0
  * @author Will Davies
@@ -58,7 +64,7 @@ public class TeamRequest extends Parser {
      */
     public String[] getTeamKeys(int pageNum) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/"+pageNum+"/keys");
-        return Arrays.asList(keys.toArray()).toArray(new String[keys.size()]);
+        return Utils.jsonArrayToStringArray(keys);
     }
 
     /**
@@ -96,7 +102,7 @@ public class TeamRequest extends Parser {
      */
     public String[] getTeamKeys(int year, int pageNum) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/"+year+"/"+pageNum+"/keys");
-        return Arrays.asList(keys.toArray()).toArray(new String[keys.size()]);
+        return Utils.jsonArrayToStringArray(keys);
     }
 
     /**
@@ -125,7 +131,7 @@ public class TeamRequest extends Parser {
     public long[] getYearsParticipated(int number) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/years_participated");
         if(keys == null) return null;
-        String[] data = Arrays.asList(keys.toArray()).toArray(new String[keys.size()]);
+        String[] data = Utils.jsonArrayToStringArray(keys);
         long[] years = new long[data.length];
         for(int i = 0; i < years.length; i++) {
             years[i] = Long.parseLong(data[i]);
@@ -182,6 +188,16 @@ public class TeamRequest extends Parser {
     }
 
     /**
+     * Gets a list of the event keys for all events this team has competed at.
+     * @param number the team's frc number
+     * @return String[] containg all the event keys for events this team is in
+     */
+    public String[] getEventKeys(int number) {
+        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/events/keys");
+        return Utils.jsonArrayToStringArray(keys);
+    }
+
+    /**
      * Gets a list of events this team has competed at in the given year.
      * @param number the team's frc number
      * @param year the year to get events from
@@ -221,7 +237,7 @@ public class TeamRequest extends Parser {
      */
     public String[] getEventKeys(int number, int year) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/events/"+year+"/keys");
-        return Arrays.asList(keys.toArray()).toArray(new String[keys.size()]);
+        return Utils.jsonArrayToStringArray(keys);
     }
 
     /**
@@ -264,25 +280,115 @@ public class TeamRequest extends Parser {
      */
     public String[] getMatchKeys(int number, String eventKey) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/event/"+eventKey+"/matches/keys");
-        return Arrays.asList(keys.toArray()).toArray(new String[keys.size()]);
+        return Utils.jsonArrayToStringArray(keys);
     }
 
     /**
      * Gets a list of awards the given team won at the given event.
      * @param number the team's frc number
-     * @param eventKey
+     * @param eventKey the event's key code (example: '2016nytr')
      * @return Award[] containing n award object for each award this team won in the specified event
      */
     public Award[] getTeamEventAwards(int number, String eventKey) {
         JSONArray awards = (JSONArray) IO.doRequest("team/frc"+number+"/event/"+eventKey+"/awards");
         if(awards == null) return null;
         Award[] toGet= new Award[awards.size()];
-        for(int i = 0; i < awards.size(); i++) {
-            toGet[i] = parseAward(awards.get(i));
-        }
+        for(int i = 0; i < awards.size(); i++) toGet[i] = parseAward(awards.get(i));
         return toGet;
     }
 
+    /**
+     * Gets a list of awards the given team has won.
+     * @param number the team's frc number
+     * @return Award[] containing all the awards this team has won
+     */
+    public Award[] getTeamAwards(int number) {
+        JSONArray awards = (JSONArray) IO.doRequest("team/frc"+number+"/awards");
+        if(awards == null) return null;
+        Award[] toGet= new Award[awards.size()];
+        for(int i = 0; i < awards.size(); i++) toGet[i] = parseAward(awards.get(i));
+        return toGet;
+    }
+
+    /**
+     * Gets a list of awards the given team has won.
+     * @param number the team's frc number
+     * @param year the year
+     * @return Award[] containing all the awards this team has won
+     */
+    public Award[] getTeamAwards(int number, int year) {
+        JSONArray awards = (JSONArray) IO.doRequest("team/frc"+number+"/awards/"+year);
+        if(awards == null) return null;
+        Award[] toGet= new Award[awards.size()];
+        for(int i = 0; i < awards.size(); i++) toGet[i] = parseAward(awards.get(i));
+        return toGet;
+    }
+
+    /**
+     * Gets a list of matches for the given team and year.
+     * @param number the team's frc number
+     * @param year the year
+     * @return Match[] containing all the matches the specified team was in for the specified year
+     */
+    public Match[] getTeamMatches(int number, int year) {
+        JSONArray matches = (JSONArray) IO.doRequest("team/frc"+number+"/matches/"+year);
+        if(matches == null) return null;
+        Match[] toGet = new Match[matches.size()];
+        for(int i = 0; i < matches.size(); i++) toGet[i] = parseMatch(matches.get(i));
+        return toGet;
+    }
+
+    /**
+     * Gets a list of matches for the given team and year.
+     * @param number the team's frc number
+     * @param year the year
+     * @return SMatch[] containing all the matches the specified team was in for the specified year (simple models)
+     */
+    public SMatch[] getTeamSMatches(int number, int year) {
+        JSONArray matches = (JSONArray) IO.doRequest("team/frc"+number+"/matches/"+year+"/simple");
+        if(matches == null) return null;
+        SMatch[] toGet = new SMatch[matches.size()];
+        for(int i = 0; i < matches.size(); i++) toGet[i] = parseSMatch(matches.get(i));
+        return toGet;
+    }
+
+    /**
+     * Gets a list of match keys for matches for the given team and year.
+     * @param number the team's frc number
+     * @param year the year to get match keys from
+     * @return String[] containing match string keys for each match
+     */
+    public String[] getTeamMatchKeys(int number, int year) {
+        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/matches/"+year+"/keys");
+        return Utils.jsonArrayToStringArray(keys);
+    }
+
+    /**
+     * Gets a list of Media (videos / pictures) for the given team and year.
+     * @param number the team's frc number
+     * @param year the year
+     * @return Media[] containing all the media associated with this team for the specified year
+     */
+    public Media[] getTeamMedia(int number, int year) {
+        JSONArray medias = (JSONArray) IO.doRequest("team/frc"+number+"/media/"+year);
+        if(medias == null) return null;
+        Media[] toGet = new Media[medias.size()];
+        for(int i = 0; i < medias.size(); i++) toGet[i] = parseMedia(medias.get(i));
+        return toGet;
+    }
+
+    /**
+     * Gets a list of Media (social media) for the given team.
+     * @param number the team's frc number
+     * @return Media[] containing all social media associated with this team
+     */
+    public Media[] getTeamSocialMedia(int number) {
+        JSONArray medias = (JSONArray) IO.doRequest("team/frc"+number+"/social_media");
+        if(medias == null) return null;
+        Media[] toGet = new Media[medias.size()];
+        for(int i = 0; i < medias.size(); i++) toGet[i] = parseMedia(medias.get(i));
+        return toGet;
+    }
 
 
 }
