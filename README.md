@@ -1,5 +1,5 @@
 # TBA-API-V3
-A Java API for pulling robotics data from www.thebluealliance.com.
+A Java library for pulling robotics data from https://www.thebluealliance.com.
 
 I made this API because none of the other Java APIs were working for me. I hope that this will be the last place you have to go for your TBA API needs. Thanks!
 # Installation
@@ -36,7 +36,7 @@ StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitNet
 Make sure you make API calls in an ```AsyncTask```
 
 # Tutorial and Examples
-Find them at https://www.github.com/wdavies973/TBA-API-V3/wiki
+Find them at https://www.github.com/wdavies973/TBA-API-V3/wiki.  
 The API is designed to be easy to use and fairly idiot-proof (no offense, I wish everyone designed their software like that).
 
 # Contribute
