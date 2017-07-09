@@ -1,6 +1,7 @@
 package utils;
 
 import org.json.simple.parser.JSONParser;
+import utils.exceptions.AuthTokenNotFoundException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -18,6 +19,8 @@ public class IO {
     private static final JSONParser parser = new JSONParser();
 
     public static Object doRequest(String targetURL) {
+        if(Constants.AUTH_TOKEN == null || Constants.AUTH_TOKEN.equals("")) throw new AuthTokenNotFoundException("You have not set an auth token for TBA-API-V3. Please set it with TBA.setAuthToken(String token).");
+
         HttpURLConnection connection = null;
         try {
             URL url = new URL( Constants.URL + targetURL);
@@ -39,11 +42,8 @@ public class IO {
             }
             rd.close();
             return parser.parse(response.toString());
-        } catch(java.lang.Error e) {
-
-        } catch (Exception e) {
-            System.err.println("Data request failed. Check your connection / verify correct data key. If the issue persists, contact the developer");
-            e.printStackTrace();
+        } catch(Exception e) {
+            // do nothing, should be handled somewhere else
         } finally {
             if(connection != null) connection.disconnect();
         }

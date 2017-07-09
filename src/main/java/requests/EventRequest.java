@@ -12,6 +12,9 @@ import org.json.simple.JSONArray;
 import utils.IO;
 import utils.Parser;
 import utils.Utils;
+import utils.exceptions.DataNotFoundException;
+
+import javax.xml.crypto.Data;
 
 /**
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /events/ or /event/
@@ -37,7 +40,7 @@ public class EventRequest extends Parser {
      */
     public Team[] getEventTeams(String eventKey) {
         JSONArray teams = (JSONArray) IO.doRequest("event/"+eventKey+"/teams");
-        if(teams == null) return null;
+        if(teams == null) throw new DataNotFoundException("Couldn't find any teams in event with key: "+eventKey);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseTeam(teams.get(i));
         return toGet;
@@ -52,7 +55,7 @@ public class EventRequest extends Parser {
      */
     public STeam[] getSEventTeams(String eventKey) {
         JSONArray teams = (JSONArray) IO.doRequest("event/"+eventKey+"/teams/simple");
-        if(teams == null) return null;
+        if(teams == null) throw new DataNotFoundException("Couldn't find any simple teams in event with key: "+eventKey);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseSTeam(teams.get(i));
         return toGet;
@@ -67,6 +70,7 @@ public class EventRequest extends Parser {
      */
     public String[] getTeamKeys(String eventKey) {
         JSONArray keys = (JSONArray) IO.doRequest("event/"+eventKey+"/teams/keys");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any team keys in event with key: "+eventKey);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -79,7 +83,7 @@ public class EventRequest extends Parser {
      */
     public Event[] getEvents(int year) {
         JSONArray events = (JSONArray) IO.doRequest("events/"+year);
-        if(events == null) return null;
+        if(events == null) throw new DataNotFoundException("Couldn't find any events in year: "+year);
         Event[] toGet = new Event[events.size()];
         for(int i = 0; i < events.size(); i++) toGet[i] = parseEvent(events.get(i));
         return toGet;
@@ -93,8 +97,8 @@ public class EventRequest extends Parser {
      * @return SEvent[] containing all the events in the specified year
      */
     public SEvent[] getSEvents(int year) {
-        JSONArray events = (JSONArray) IO.doRequest("events/"+"year/simple");
-        if(events == null) return null;
+        JSONArray events = (JSONArray) IO.doRequest("events/"+year+"/simple");
+        if(events == null) throw new DataNotFoundException("Couldn't find any simple events in year: "+year);
         SEvent[] toGet = new SEvent[events.size()];
         for(int i = 0; i < events.size(); i++) toGet[i] = parseSEvent(events.get(i));
         return toGet;
@@ -109,6 +113,7 @@ public class EventRequest extends Parser {
      */
     public String[] getEventKeys(int year) {
         JSONArray keys = (JSONArray) IO.doRequest("events/"+year+"/keys");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any event keys in year: "+year);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -120,7 +125,9 @@ public class EventRequest extends Parser {
      * @return Event model representing the event associated with the event key
      */
     public Event getEvent(String eventKey) {
-        return parseEvent(IO.doRequest("event/"+eventKey));
+        Event event = parseEvent(IO.doRequest("event/"+eventKey));
+        if(event == null) throw new DataNotFoundException("No event found with key: "+eventKey);
+        return event;
     }
 
     /**
@@ -131,7 +138,9 @@ public class EventRequest extends Parser {
      * @return Event model representing the event associated with the event key
      */
     public SEvent getSEvent(String eventKey) {
-        return parseSEvent(IO.doRequest("event/"+eventKey+"/simple"));
+        SEvent event = parseSEvent(IO.doRequest("event/"+eventKey+"/simple"));
+        if(event == null) throw new DataNotFoundException("No simple event found with key: "+eventKey);
+        return event;
     }
 
 
@@ -143,7 +152,9 @@ public class EventRequest extends Parser {
      * @return EventOPR[] containing an EventOPR for each team
      */
     public EventOPR[] getOprs(String eventKey) {
-        return parseOPRs(IO.doRequest("event/"+eventKey+"/oprs"));
+        EventOPR[] oprs = parseOPRs(IO.doRequest("event/"+eventKey+"/oprs"));
+        if(oprs == null) throw new DataNotFoundException("No oprs found for event with key: "+eventKey);
+        return oprs;
     }
 
     /**
@@ -156,7 +167,9 @@ public class EventRequest extends Parser {
      * @return JSON String containing prediction information
      */
     public String getPredictions(String eventKey) {
-        return (String) IO.doRequest("event/"+eventKey+"predictions");
+        String s =  (String) IO.doRequest("event/"+eventKey+"predictions");
+        if(s == null) throw new DataNotFoundException("No predictions found for event with key: "+eventKey);
+        return s;
     }
 
     /**
@@ -168,7 +181,7 @@ public class EventRequest extends Parser {
      */
     public Match[] getMatches(String eventKey) {
         JSONArray matches = (JSONArray) IO.doRequest("event/"+eventKey+"/matches");
-        if(matches == null) return null;
+        if(matches == null)  throw new DataNotFoundException("No matches found for event with key: "+eventKey);
         Match[] toGet = new Match[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseMatch(matches.get(i));
         return toGet;
@@ -182,8 +195,8 @@ public class EventRequest extends Parser {
      * @return Match[] containing a Match object for each match in the specified event
      */
     public SMatch[] getSMatches(String eventKey) {
-        JSONArray matches = (JSONArray) IO.doRequest("events/"+"year/simple");
-        if(matches == null) return null;
+        JSONArray matches = (JSONArray) IO.doRequest("event/"+eventKey+"/matches/simple");
+        if(matches == null)  throw new DataNotFoundException("No simple matches found for event with key: "+eventKey);
         SMatch[] toGet = new SMatch[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseSMatch(matches.get(i));
         return toGet;
@@ -198,6 +211,7 @@ public class EventRequest extends Parser {
      */
     public String[] getMatchKeys(String eventKey) {
         JSONArray keys = (JSONArray) IO.doRequest("event/"+eventKey+"/matches/keys");
+        if(keys == null) throw new DataNotFoundException("No match keys found for event with key: "+eventKey);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -210,7 +224,7 @@ public class EventRequest extends Parser {
      */
     public Award[] getEventAwards(String eventKey) {
         JSONArray array = (JSONArray) IO.doRequest("event/"+eventKey+"/awards");
-        if(array == null) return null;
+        if(array == null)  throw new DataNotFoundException("No awards found for event with key: "+eventKey);
         Award[] toReturn = new Award[array.size()];
         for(int i = 0; i < array.size(); i++) toReturn[i] = parseAward(array.get(i));
         return toReturn;

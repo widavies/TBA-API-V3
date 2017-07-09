@@ -1,5 +1,6 @@
 package main;
 
+import lombok.Data;
 import models.other.APIStatus;
 import models.other.Award;
 import models.other.District;
@@ -13,24 +14,42 @@ import models.standard.Event;
 import models.standard.Match;
 import models.standard.Team;
 import requests.*;
-import utils.Constants;
 
 /**
- * This is the main interface for the API, let's talk about that.
- *
- * The actual API calls are organized by the type of request (district, event, match, team, other), which can be found
- * in the requests package. Essentially, TBA is a single class that allows you to call every single method without having
- * to worry about what type it is. However, for debugging, it's nice to keep the actual API code organized by type.
- * You'll notice that TBA doesn't have any getters/setters/constructors for parameters, even though only a couple parameters are
- * shared across the entire API. There are several reasons for this, 1) to keep the Java implementation more consistent with the
- * online API 2) if you need to change parameters or input different ones for each method calls, it's nice to avoid having to
- * manually setting them with setters and the like. However, if you'd like a constructor/setter/getter implementation, check out the CTBA class.
+ * This is an alternative to the TBA class. It allows you to use constructors/getters/setters. For more information on this,
+ * read the javadoc header for the TBA class.
  *
  * @since 1.0.0
  * @author Will Davies
  */
 @SuppressWarnings("unused")
-public class TBA {
+@Data
+public class CTBA {
+
+    /**
+     * TBA District Key, eg 2016fim
+     */
+    private String districtKey;
+    /**
+     * TBA Team Key, eg frc254
+     */
+    private int number;
+    /**
+     * Page number of results to return, zero-indexed
+     */
+    private int pageNum;
+    /**
+     * TBA Event Key, eg 2016nytr
+     */
+    private String eventKey;
+    /**
+     * TBA Match Key, eg 2016nytr_qm1
+     */
+    private String matchKey;
+    /**
+     * Competition Year (or Season). Must be 4 digits.
+     */
+    private int year;
 
     private DistrictRequest dr;
     private EventRequest er;
@@ -38,7 +57,7 @@ public class TBA {
     private OtherRequest or;
     private TeamRequest tr;
 
-    public TBA() {
+    public CTBA() {
         dr = new DistrictRequest();
         er = new EventRequest();
         mr = new MatchRequest();
@@ -47,31 +66,20 @@ public class TBA {
     }
 
     /**
-     * Sets the authentication token for the API, required for all calls!
-     * Obtain an auth token from your account page on thebluealliance.com
-     * @param authToken the auth token to set
-     */
-    public static void setAuthToken(String authToken) {
-        Constants.AUTH_TOKEN = authToken;
-    }
-
-    /**
      * Mirror of: /district/{district_key}/teams
      *
-     * @param districtKey TBA District Key, eg 2016fim
      * @return Team[] including a Team object for every team in the specified district
      */
-    public Team[] getDistrictTeams(String districtKey) {
+    public Team[] getDistrictTeams() {
         return dr.getDistrictTeams(districtKey);
     }
 
     /**
      * Mirror of: /district/{district_key}/teams/simple
      *
-     * @param districtKey TBA District Key, eg 2016fim
      * @return STeam[] including a STeam object for every team in the specified district (simple model)
      */
-    public STeam[] getDistrictSTeams(String districtKey) {
+    public STeam[] getDistrictSTeams() {
         return dr.getDistrictSTeams(districtKey);
     }
 
@@ -80,30 +88,27 @@ public class TBA {
      * <p>
      * Gets a list of Team objects that competed in events in the given district.
      *
-     * @param districtKey TBA District Key, eg 2016fim
      * @return String[] containing all the team keys in this district
      */
-    public String[] getDistrictTeamKeys(String districtKey) {
+    public String[] getDistrictTeamKeys() {
         return dr.getDistrictTeamKeys(districtKey);
     }
 
     /**
      * Mirror of: /district/{district_key}/events
      *
-     * @param districtKey TBA District Key, eg 2016fim
      * @return Event[] including an Event object for every event in the specified district
      */
-    public Event[] getDistrictEvents(String districtKey) {
+    public Event[] getDistrictEvents() {
         return dr.getDistrictEvents(districtKey);
     }
 
     /**
      * Mirror of: /district/{district_key}/events/simple
      *
-     * @param districtKey TBA District Key, eg 2016fim
      * @return SEvent[] including an SEvent object for every event in the specified district (simple model)
      */
-    public SEvent[] getDistrictSEvents(String districtKey) {
+    public SEvent[] getDistrictSEvents() {
         return dr.getDistrictSEvents(districtKey);
     }
 
@@ -112,10 +117,9 @@ public class TBA {
      * <p>
      * Gets a list of Team objects that competed in events in the given district.
      *
-     * @param districtKey TBA District Key, eg 2016fim
      * @return String[] containing all the team keys in this district
      */
-    public String[] getDistrictEventKeys(String districtKey) {
+    public String[] getDistrictEventKeys() {
         return dr.getDistrictEventKeys(districtKey);
     }
 
@@ -124,10 +128,9 @@ public class TBA {
      * <p>
      * Gets a list of districts and their corresponding district key, for the given year.
      *
-     * @param year Competition Year (or Season). Must be 4 digits.
      * @return District[] containing a District for each active district in the specified year
      */
-    public District[] getDistricts(int year) {
+    public District[] getDistricts() {
         return dr.getDistricts(year);
     }
 
@@ -163,7 +166,7 @@ public class TBA {
      * @param eventKey TBA Event Key, eg 2016nytr
      * @return String[] containing all the team keys in this event
      */
-    public String[] getTeamKeys(String eventKey) {
+    public String[] getEventTeamKeys(String eventKey) {
         return er.getTeamKeys(eventKey);
     }
 
@@ -172,10 +175,9 @@ public class TBA {
      * <p>
      * Gets a list of events in the given year.
      *
-     * @param year Competition Year (or Season). Must be 4 digits.
      * @return Event[] containing all the events in the specified year
      */
-    public Event[] getEvents(int year) {
+    public Event[] getEvents() {
         return er.getEvents(year);
     }
 
@@ -184,10 +186,9 @@ public class TBA {
      * <p>
      * Gets a list of events in the given year.
      *
-     * @param year Competition Year (or Season). Must be 4 digits.
      * @return SEvent[] containing all the events in the specified year
      */
-    public SEvent[] getSEvents(int year) {
+    public SEvent[] getSEvents() {
         return er.getSEvents(year);
     }
 
@@ -196,10 +197,9 @@ public class TBA {
      * <p>
      * Gets a list of event keys in the given year.
      *
-     * @param year Competition Year (or Season). Must be 4 digits.
      * @return String[] containing event keys for the specified year
      */
-    public String[] getEventKeys(int year) {
+    public String[] getEventKeys() {
         return er.getEventKeys(year);
     }
 
@@ -208,10 +208,9 @@ public class TBA {
      * <p>
      * Gets an Event.
      *
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return Event model representing the event associated with the event key
      */
-    public Event getEvent(String eventKey) {
+    public Event getEvent() {
         return er.getEvent(eventKey);
     }
 
@@ -220,10 +219,9 @@ public class TBA {
      * <p>
      * Gets an Event.
      *
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return Event model representing the event associated with the event key
      */
-    public SEvent getSEvent(String eventKey) {
+    public SEvent getSEvent() {
         return er.getSEvent(eventKey);
     }
 
@@ -231,10 +229,9 @@ public class TBA {
      * Mirror of: /event/{event_key}/oprs
      *
      * Gets a set of Event OPRs (including OPR, DPR, and CCWM) for the given Event.
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return EventOPR[] containing an EventOPR for each team
      */
-    public EventOPR[] getOprs(String eventKey) {
+    public EventOPR[] getOprs() {
         return er.getOprs(eventKey);
     }
 
@@ -244,10 +241,9 @@ public class TBA {
      * Gets information on TBA-generated predictions for the given Event. Contains year-specific information. WARNING This endpoint is currently under development and may change at any time.
      *
      * Not stable! No official model for this yet.
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return JSON String containing prediction information
      */
-    public String getPredictions(String eventKey) {
+    public String getPredictions() {
         return er.getPredictions(eventKey);
     }
 
@@ -255,10 +251,9 @@ public class TBA {
      * Mirror of: /event/{event_key}/matches
      *
      * Gets a list of matches for the given event.
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return Match[] containing a Match object for each match in the specified event
      */
-    public Match[] getMatches(String eventKey) {
+    public Match[] getMatches() {
         return er.getMatches(eventKey);
     }
 
@@ -266,10 +261,9 @@ public class TBA {
      * Mirror of: /event/{event_key}/matches/simple
      *
      * Gets a list of matches for the given event.
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return Match[] containing a Match object for each match in the specified event
      */
-    public SMatch[] getSMatches(String eventKey) {
+    public SMatch[] getSMatches() {
         return er.getSMatches(eventKey);
     }
 
@@ -278,10 +272,9 @@ public class TBA {
      * Mirror of: /event/{event_key}/matches/keys
      *
      * GGets a list of match keys for the given event.
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return String[] containing matches keys for the specified event
      */
-    public String[] getMatchKeys(String eventKey) {
+    public String[] getMatchKeys() {
         return er.getMatchKeys(eventKey);
     }
 
@@ -289,10 +282,9 @@ public class TBA {
      * Mirror of: /event/{event_key}/awards
      *
      * Gets a list of awards from the given event.
-     * @param eventKey TBA Event Key, eg 2016nytr
      * @return Award[] containing all the awards won in this event
      */
-    public Award[] getEventAwards(String eventKey) {
+    public Award[] getEventAwards() {
         return er.getEventAwards(eventKey);
     }
 
@@ -300,10 +292,9 @@ public class TBA {
      * Mirror of: /match/{match_key}
      *
      * Gets a Match object for the given match key.
-     * @param matchKey TBA Match Key, eg 2016nytr_qm1
      * @return Match object represented by the match key
      */
-    public Match getMatch(String matchKey) {
+    public Match getMatch() {
         return mr.getMatch(matchKey);
     }
 
@@ -311,10 +302,9 @@ public class TBA {
      * Mirror of: /match/{match_key}/simple
      *
      * Gets a Match object for the given match key.
-     * @param matchKey TBA Match Key, eg 2016nytr_qm1
      * @return SMatch object represented by the match key (simple model)
      */
-    public SMatch getSMatch(String matchKey) {
+    public SMatch getSMatch() {
         return mr.getSMatch(matchKey);
     }
 
@@ -339,10 +329,9 @@ public class TBA {
      * Mirror of: /teams/{page_num}
      *
      * Gets a list of Team objects, paginated in groups of 500.
-     * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return list of Team objects (full team models)
      */
-    public Team[] getTeams(int pageNum) {
+    public Team[] getTeams() {
         return tr.getTeams(pageNum);
     }
 
@@ -350,10 +339,9 @@ public class TBA {
      * Mirror of: /teams/{page_num}/simple
      *
      * Gets a list of STeam objects, paginated in groups of 500.
-     * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return list of STeam objects (simple team models)
      */
-    public STeam[] getSTeams(int pageNum) {
+    public STeam[] getSTeams() {
         return tr.getSTeams(pageNum);
     }
 
@@ -361,10 +349,9 @@ public class TBA {
      * Mirror of: /teams/{page_num}/keys
      *
      * Gets a list of Team keys, paginated in groups of 500. (Note, each page will not have 500 teams, but will include the teams within that range of 500.)
-     * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return String[] of team keys in the format 'frc254'
      */
-    public String[] getTeamKeys(int pageNum) {
+    public String[] getTeamKeys() {
         return tr.getTeamKeys(pageNum);
     }
 
@@ -372,23 +359,19 @@ public class TBA {
      * Mirror of: /teams/{year}/{page_num}
      *
      * Gets a list of Team objects that competed in the given year, paginated in groups of 500.
-     * @param year the year to get teams from
-     * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return list of Team objects (full models)
      */
-    public Team[] getTeams(int year, int pageNum) {
-        return tr.getTeams(year, pageNum);
+    public Team[] getTeamsByPage() {
+        return tr.getTeams(pageNum);
     }
 
     /**
      * Mirror of: /teams/{year}/{page_num}/simple
      *
      * Gets a list of Team objects that competed in the given year, paginated in groups of 500.
-     * @param year the year to get teams from
-     * @param pageNum the page number, eg: 0 for the first 500, 1 for the second 500, etc.
      * @return list of Team objects (simple models)
      */
-    public STeam[] getSTeams(int year, int pageNum) {
+    public STeam[] getSTeamsByPage() {
         return tr.getSTeams(year, pageNum);
     }
 
@@ -396,10 +379,9 @@ public class TBA {
      * Mirror of: /team/{year}/{page_num}/keys
      *
      * Gets a list Team Keys that competed in the given year, paginated in groups of 500.
-     * @param year the year to get teams from
      * @return String[] of team keys in format 'frc254'
      */
-    public String[] getTeamKeys(int year, int pageNum) {
+    public String[] getTeamKeysByPage() {
         return tr.getTeamKeys(year, pageNum);
     }
 
@@ -407,10 +389,9 @@ public class TBA {
      * Mirror of: /team/{team_key}
      *
      * Gets the specified team (full team model)
-     * @param number the team's frc number
      * @return Team object (full model)
      */
-    public Team getTeam(int number) {
+    public Team getTeam() {
         return tr.getTeam(number);
     }
 
@@ -418,10 +399,9 @@ public class TBA {
      * Mirror of: /team{team_key}/simple
      *
      * Gets the specified team (simple team model)
-     * @param number the team's frc number
      * @return STeam object (simple model)
      */
-    public STeam getSTeam(int number) {
+    public STeam getSTeam() {
         return tr.getSTeam(number);
     }
 
@@ -429,10 +409,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/years_participated
      *
      * Returns an array containing the years that a particular team participated in FRC events
-     * @param number the team's frc number
      * @return long[] containing years participated
      */
-    public long[] getYearsParticipated(int number) {
+    public long[] getYearsParticipated() {
         return tr.getYearsParticipated(number);
     }
 
@@ -440,10 +419,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/districts
      *
      * Gets the districts this team was in, empty array if none
-     * @param number the team's frc number
      * @return District[] containing a District object for each district this team was in
      */
-    public District[] getTeamDistricts(int number) {
+    public District[] getTeamDistricts() {
         return tr.getTeamDistricts(number);
     }
 
@@ -451,10 +429,9 @@ public class TBA {
      * Mirror of: /team{team_key}/robots
      *
      * Gets the robots that this team has had
-     * @param number the team's frc number
      * @return Robot[] containing a Robot object for each robot this team has built
      */
-    public Robot[] getRobots(int number) {
+    public Robot[] getRobots() {
         return tr.getRobots(number);
     }
 
@@ -462,10 +439,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/events
      *
      * Gets a list of all events this team has competed at.
-     * @param number the team's frc number
      * @return Event[] containing an Event object for each event this team was in
      */
-    public Event[] getTeamEvents(int number) {
+    public Event[] getTeamEvents() {
         return tr.getTeamEvents(number);
     }
 
@@ -473,10 +449,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/events/simple
      *
      * Gets a list of all events this team has competed at.
-     * @param number the team's frc number
      * @return SEvent[] containing an Event object for each event this team was in (simple model)
      */
-    public SEvent[] getTeamSEvents(int number) {
+    public SEvent[] getTeamSEvents() {
         return tr.getTeamSEvents(number);
     }
 
@@ -484,10 +459,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/events_keys
      *
      * Gets a list of the event keys for all events this team has competed at.
-     * @param number the team's frc number
      * @return String[] containg all the event keys for events this team is in
      */
-    public String[] getTeamEventKeys(int number) {
+    public String[] getTeamEventKeys() {
         return tr.getTeamEventKeys(number);
     }
 
@@ -495,11 +469,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/events/{year}
      *
      * Gets a list of events this team has competed at in the given year.
-     * @param number the team's frc number
-     * @param year the year to get events from
      * @return Event[] containing an Event object for each event this team was in the specified year (full model)
      */
-    public Event[] getEvents(int number, int year) {
+    public Event[] getTeamEventsByYear() {
         return tr.getEvents(number, year);
     }
 
@@ -507,11 +479,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/events/{year}/simple
      *
      * Gets a short-form list of events this team has competed at in the given year.
-     * @param number the team's frc number
-     * @param year the year to get events from
      * @return Event[] containing an Event object for each event this team was in the specified year (simple model)
      */
-    public SEvent[] getSEvents(int number, int year) {
+    public SEvent[] getTeamSEventsByYear() {
         return tr.getSEvents(number, year);
     }
 
@@ -519,11 +489,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/events/{year}/keys
      *
      * Gets a list of the event keys for events this team has competed at in the given year.
-     * @param number the team's frc number
-     * @param year the year to get events from
      * @return String[] containing an event key for each event this team has participated in
      */
-    public String[] getEventKeys(int number, int year) {
+    public String[] getTeamEventKeysByYear() {
         return tr.getEventKeys(number, year);
     }
 
@@ -531,11 +499,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/event/{event_key}/matches
      *
      * Gets a list of matches for the given team and event.
-     * @param number the team's frc number
-     * @param eventKey the event's key code (example: '2016nytr')
      * @return Match[] containing a match for each match this team was in in the specified event
      */
-    public Match[] getTeamEventMatches(int number, String eventKey) {
+    public Match[] getTeamEventMatches() {
         return tr.getTeamEventMatches(number, eventKey);
     }
 
@@ -543,11 +509,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/event/{event_key}/matches/simple
      *
      * Gets a short-form list of matches for the given team and event.
-     * @param number the team's frc number
-     * @param eventKey the event's key code (example: '2016nytr')
      * @return SMatch[] containing a match for each match this team was in in the specified event (simple model)
      */
-    public SMatch[] getTeamEventSMatches(int number, String eventKey) {
+    public SMatch[] getTeamEventSMatches() {
         return tr.getTeamEventSMatches(number, eventKey);
     }
 
@@ -555,11 +519,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/event/{event_key}/matches/keys
      *
      * Gets a list of the event keys for events this team has competed at in the given year.
-     * @param number the team's frc number
-     * @param eventKey the event's key code (example: '2016nytr')
      * @return String[] containing an event key for each event this team has participated in
      */
-    public String[] getMatchKeys(int number, String eventKey) {
+    public String[] getTeamMatchKeysByEvent() {
         return tr.getMatchKeys(number, eventKey);
     }
 
@@ -567,11 +529,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/event/{event_key}/awards
      *
      * Gets a list of awards the given team won at the given event.
-     * @param number the team's frc number
-     * @param eventKey the event's key code (example: '2016nytr')
      * @return Award[] containing n award object for each award this team won in the specified event
      */
-    public Award[] getTeamEventAwards(int number, String eventKey) {
+    public Award[] getTeamEventAwards() {
         return tr.getTeamEventAwards(number, eventKey);
     }
 
@@ -579,10 +539,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/awards
      *
      * Gets a list of awards the given team has won.
-     * @param number the team's frc number
      * @return Award[] containing all the awards this team has won
      */
-    public Award[] getTeamAwards(int number) {
+    public Award[] getTeamAwardsByNumber() {
         return tr.getTeamAwards(number);
     }
 
@@ -590,11 +549,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/awards/{year}
      *
      * Gets a list of awards the given team has won.
-     * @param number the team's frc number
-     * @param year the year
      * @return Award[] containing all the awards this team has won
      */
-    public Award[] getTeamAwards(int number, int year) {
+    public Award[] getTeamAwards() {
         return tr.getTeamAwards(number, year);
     }
 
@@ -602,11 +559,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/matches/{year}
      *
      * Gets a list of matches for the given team and year.
-     * @param number the team's frc number
-     * @param year the year
      * @return Match[] containing all the matches the specified team was in for the specified year
      */
-    public Match[] getTeamMatches(int number, int year) {
+    public Match[] getTeamMatches() {
         return tr.getTeamMatches(number, year);
     }
 
@@ -614,11 +569,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/matches/{year}/simple
      *
      * Gets a list of matches for the given team and year.
-     * @param number the team's frc number
-     * @param year the year
      * @return SMatch[] containing all the matches the specified team was in for the specified year (simple models)
      */
-    public SMatch[] getTeamSMatches(int number, int year) {
+    public SMatch[] getTeamSMatches() {
         return tr.getTeamSMatches(number, year);
     }
 
@@ -626,11 +579,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/matches/{year}/keys
      *
      * Gets a list of match keys for matches for the given team and year.
-     * @param number the team's frc number
-     * @param year the year to get match keys from
      * @return String[] containing match string keys for each match
      */
-    public String[] getTeamMatchKeys(int number, int year) {
+    public String[] getTeamMatchKeys() {
         return tr.getTeamMatchKeys(number, year);
     }
 
@@ -638,11 +589,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/media/{year}
      *
      * Gets a list of Media (videos / pictures) for the given team and year.
-     * @param number the team's frc number
-     * @param year the year
      * @return Media[] containing all the media associated with this team for the specified year
      */
-    public Media[] getTeamMedia(int number, int year) {
+    public Media[] getTeamMedia() {
         return tr.getTeamMedia(number, year);
     }
 
@@ -650,10 +599,9 @@ public class TBA {
      * Mirror of: /team/{team_key}/social_media
      *
      * Gets a list of Media (social media) for the given team.
-     * @param number the team's frc number
      * @return Media[] containing all social media associated with this team
      */
-    public Media[] getTeamSocialMedia(int number) {
+    public Media[] getTeamSocialMedia() {
         return tr.getTeamSocialMedia(number);
     }
 }

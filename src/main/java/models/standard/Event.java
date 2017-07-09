@@ -33,7 +33,7 @@ public class Event extends SEvent {
     /**
      * The FIRST internal Event ID, used to link to the event on the FRC webpage.
      */
-    private long firstEventID;
+    private String firstEventID;
     /**
      * The TBA Event key that represents the event’s parent. Used to link back to the event from a division event. It is also the inverse relation of divison_keys.
      */

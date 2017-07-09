@@ -1,25 +1,31 @@
-package main;
+package utils;
 
+import main.TBA;
 import models.other.APIStatus;
+import models.other.events.EventOPR;
+import models.simple.SMatch;
 import models.simple.STeam;
+import models.standard.Event;
+import models.standard.Match;
 import models.standard.Team;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.IO;
 
 /**
- * Created by Will Davies on 7/7/2017.
+ * Use for testing the API calls
  */
+@SuppressWarnings("unused")
 public class Test {
 
     public static void main(String[] args) {
-        System.out.println(IO.doRequest("districts/2017"));
-
-
-
+        TBA.setAuthToken("FhVZJYGHSWut9lO6ArPP8GpAX7pljZ7PCvyDpg3pqVIkiEoXH9pN8YOvTHrPbk2c");
+        TBA t = new TBA();
+        String[] s = t.getMatchKeys("2016casd");
+        System.out.println(s[0]);
     }
 
-    private static void printTeam(Team team) {
+    public static void printTeam(Team team) {
         System.out.println("Key: "+team.getName());
         System.out.println("Number: "+team.getTeamNumber());
         System.out.println("Nickname: "+team.getNickname());
@@ -39,7 +45,7 @@ public class Test {
         System.out.println("motto: "+team.getMotto());
     }
 
-    private static void printSTeam(STeam team) {
+    public static void printSTeam(STeam team) {
         System.out.println("Key: "+team.getName());
         System.out.println("Number: "+team.getTeamNumber());
         System.out.println("Nickname: "+team.getNickname());
@@ -49,7 +55,7 @@ public class Test {
         System.out.println("Country: "+team.getCountry());
     }
 
-    private static void printStatus(APIStatus status) {
+    public static void printStatus(APIStatus status) {
         System.out.println("Current season: "+status.getCurrentSeason());
         System.out.println("Max season: "+status.getMaxSeason());
         for(String s : status.getDownEvents()) {
@@ -59,7 +65,6 @@ public class Test {
         System.out.println("IOS latest app version: "+status.getIosMinAppVersion());
         System.out.println("Android min app version: "+status.getAndroidMinAppVersion());
         System.out.println("Android latest app version: "+status.getAndroidLatestAppVersion());
-
     }
 
 }

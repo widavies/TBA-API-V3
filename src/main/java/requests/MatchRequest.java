@@ -4,6 +4,7 @@ import models.simple.SMatch;
 import models.standard.Match;
 import utils.IO;
 import utils.Parser;
+import utils.exceptions.DataNotFoundException;
 
 /**
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /match/
@@ -22,7 +23,9 @@ public class MatchRequest extends Parser {
      * @return Match object represented by the match key
      */
     public Match getMatch(String matchKey) {
-        return parseMatch(IO.doRequest("match/"+matchKey));
+        Match m = parseMatch(IO.doRequest("match/"+matchKey));
+        if(m == null) throw new DataNotFoundException("No match found with key: "+matchKey);
+        return m;
     }
 
     /**
@@ -33,7 +36,9 @@ public class MatchRequest extends Parser {
      * @return SMatch object represented by the match key (simple model)
      */
     public SMatch getSMatch(String matchKey) {
-        return parseSMatch(IO.doRequest("match/"+matchKey));
+        SMatch m = parseSMatch(IO.doRequest("match/"+matchKey+"/simple"));
+        if(m == null) throw new DataNotFoundException("No match found with key: "+matchKey);
+        return m;
     }
 
 

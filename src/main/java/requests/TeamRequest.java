@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import utils.IO;
 import utils.Parser;
 import utils.Utils;
+import utils.exceptions.DataNotFoundException;
 
 /**
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /teams/ or /team/
@@ -36,7 +37,7 @@ public class TeamRequest extends Parser {
      */
     public Team[] getTeams(int pageNum) {
         JSONArray teams = (JSONArray) IO.doRequest("teams/"+pageNum);
-        if(teams == null) return null;
+        if(teams == null) throw new DataNotFoundException("No teams were found with pageNum: "+pageNum);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseTeam(teams.get(i));
         return toGet;
@@ -51,7 +52,7 @@ public class TeamRequest extends Parser {
      */
     public STeam[] getSTeams(int pageNum) {
         JSONArray teams = (JSONArray) IO.doRequest("teams/"+pageNum+"/simple");
-        if(teams == null) return null;
+        if(teams == null) throw new DataNotFoundException("No simple teams were found with pageNum: "+pageNum);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseSTeam(teams.get(i));
         return toGet;
@@ -66,6 +67,7 @@ public class TeamRequest extends Parser {
      */
     public String[] getTeamKeys(int pageNum) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/"+pageNum+"/keys");
+        if(keys == null) throw new DataNotFoundException("No team key was found with pageNum: "+pageNum);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -79,7 +81,7 @@ public class TeamRequest extends Parser {
      */
     public Team[] getTeams(int year, int pageNum) {
         JSONArray teams = (JSONArray) IO.doRequest("teams/"+year+"/"+pageNum);
-        if(teams == null) return null;
+        if(teams == null) throw new DataNotFoundException("No teams were found with pageNum: "+pageNum+", year: "+year);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseTeam(teams.get(i));
         return toGet;
@@ -95,7 +97,7 @@ public class TeamRequest extends Parser {
      */
     public STeam[] getSTeams(int year, int pageNum) {
         JSONArray teams = (JSONArray) IO.doRequest("teams/"+year+"/"+pageNum+"/simple");
-        if(teams == null) return null;
+        if(teams == null) throw new DataNotFoundException("No simple teams were found with pageNum: "+pageNum+", year: "+year);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseSTeam(teams.get(i));
         return toGet;
@@ -110,6 +112,7 @@ public class TeamRequest extends Parser {
      */
     public String[] getTeamKeys(int year, int pageNum) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/"+year+"/"+pageNum+"/keys");
+        if(keys == null) throw new DataNotFoundException("No team keys were found with pageNum: "+pageNum+", year: "+year);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -121,7 +124,9 @@ public class TeamRequest extends Parser {
      * @return Team object (full model)
      */
     public Team getTeam(int number) {
-        return parseTeam(IO.doRequest("teams/frc"+number));
+        Team team = parseTeam(IO.doRequest("team/frc"+number));
+        if(team == null) throw new DataNotFoundException("No team found with number: "+number);
+        return team;
     }
 
     /**
@@ -132,7 +137,9 @@ public class TeamRequest extends Parser {
      * @return STeam object (simple model)
      */
     public STeam getSTeam(int number) {
-        return parseSTeam(IO.doRequest("teams/frc"+number+"/simple"));
+        STeam team = parseSTeam(IO.doRequest("team/frc"+number));
+        if(team == null) throw new DataNotFoundException("No simple team found with number: "+number);
+        return team;
     }
 
     /**
@@ -143,8 +150,8 @@ public class TeamRequest extends Parser {
      * @return long[] containing years participated
      */
     public long[] getYearsParticipated(int number) {
-        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/years_participated");
-        if(keys == null) return null;
+        JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/years_participated");
+        if(keys == null) throw new DataNotFoundException("Couldn't find years participated for team with number: "+number);
         String[] data = Utils.jsonArrayToStringArray(keys);
         long[] years = new long[data.length];
         for(int i = 0; i < years.length; i++) {
@@ -161,7 +168,9 @@ public class TeamRequest extends Parser {
      * @return District[] containing a District object for each district this team was in
      */
     public District[] getTeamDistricts(int number) {
-        return parseDistrictList(IO.doRequest("teams/frc"+number+"/districts"));
+        District[] districts = parseDistrictList(IO.doRequest("team/frc"+number+"/districts"));
+        if(districts == null) throw new DataNotFoundException("Couldn't team districts for team with number: "+number);
+        return districts;
     }
 
     /**
@@ -172,7 +181,9 @@ public class TeamRequest extends Parser {
      * @return Robot[] containing a Robot object for each robot this team has built
      */
     public Robot[] getRobots(int number) {
-        return parseRobots(IO.doRequest("teams/frc"+number+"/robots"));
+        Robot[] robots = parseRobots(IO.doRequest("team/frc"+number+"/robots"));
+        if(robots == null) throw new DataNotFoundException("Couldn't robots for team with number: "+number);
+        return robots;
     }
 
     /**
@@ -183,8 +194,8 @@ public class TeamRequest extends Parser {
      * @return Event[] containing an Event object for each event this team was in
      */
     public Event[] getTeamEvents(int number) {
-        JSONArray events = (JSONArray) IO.doRequest("teams/frc"+number+"/events");
-        if(events == null) return null;
+        JSONArray events = (JSONArray) IO.doRequest("team/frc"+number+"/events");
+        if(events == null) throw new DataNotFoundException("Couldn't find any events for team with number: "+number);
         Event[] toGet = new Event[events.size()];
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseEvent(events.get(i));
@@ -200,8 +211,8 @@ public class TeamRequest extends Parser {
      * @return SEvent[] containing an Event object for each event this team was in (simple model)
      */
     public SEvent[] getTeamSEvents(int number) {
-        JSONArray events = (JSONArray) IO.doRequest("teams/frc"+number+"/events/simple");
-        if(events == null) return null;
+        JSONArray events = (JSONArray) IO.doRequest("team/frc"+number+"/events/simple");
+        if(events == null) throw new DataNotFoundException("Couldn't find any simple events for team with number: "+number);
         SEvent[] toGet = new SEvent[events.size()];
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseSEvent(events.get(i));
@@ -217,7 +228,8 @@ public class TeamRequest extends Parser {
      * @return String[] containg all the event keys for events this team is in
      */
     public String[] getTeamEventKeys(int number) {
-        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/events/keys");
+        JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/events/keys");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any event keys for team with number: "+number);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -230,8 +242,8 @@ public class TeamRequest extends Parser {
      * @return Event[] containing an Event object for each event this team was in the specified year (full model)
      */
     public Event[] getEvents(int number, int year) {
-        JSONArray events = (JSONArray) IO.doRequest("teams/frc"+number+"/events/"+year);
-        if(events == null) return null;
+        JSONArray events = (JSONArray) IO.doRequest("team/frc"+number+"/events/"+year);
+        if(events == null) throw new DataNotFoundException("Couldn't find any events for team with number: "+number+", year: "+year);
         Event[] toGet = new Event[events.size()];
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseEvent(events.get(i));
@@ -248,8 +260,8 @@ public class TeamRequest extends Parser {
      * @return Event[] containing an Event object for each event this team was in the specified year (simple model)
      */
     public SEvent[] getSEvents(int number, int year) {
-        JSONArray events = (JSONArray) IO.doRequest("teams/frc"+number+"/events/"+year+"/simple");
-        if(events == null) return null;
+        JSONArray events = (JSONArray) IO.doRequest("team/frc"+number+"/events/"+year+"/simple");
+        if(events == null) throw new DataNotFoundException("Couldn't find any simple events for team with number: "+number+", year: "+year);
         SEvent[] toGet = new SEvent[events.size()];
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseSEvent(events.get(i));
@@ -266,7 +278,8 @@ public class TeamRequest extends Parser {
      * @return String[] containing an event key for each event this team has participated in
      */
     public String[] getEventKeys(int number, int year) {
-        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/events/"+year+"/keys");
+        JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/events/"+year+"/keys");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any event keys for team with number: "+number+", year: "+year);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -279,8 +292,8 @@ public class TeamRequest extends Parser {
      * @return Match[] containing a match for each match this team was in in the specified event
      */
     public Match[] getTeamEventMatches(int number, String eventKey) {
-        JSONArray matches = (JSONArray) IO.doRequest("teams/frc"+number+"/event/"+eventKey+"/matches");
-        if(matches == null) return null;
+        JSONArray matches = (JSONArray) IO.doRequest("team/frc"+number+"/event/"+eventKey+"/matches");
+        if(matches == null) throw new DataNotFoundException("Couldn't find any matches for team with number: "+number+", event key: "+eventKey);
         Match[] toGet = new Match[matches.size()];
         for(int i = 0; i < matches.size(); i++) {
             toGet[i] = parseMatch(matches.get(i));
@@ -297,8 +310,8 @@ public class TeamRequest extends Parser {
      * @return SMatch[] containing a match for each match this team was in in the specified event (simple model)
      */
     public SMatch[] getTeamEventSMatches(int number, String eventKey) {
-        JSONArray matches = (JSONArray) IO.doRequest("teams/frc"+number+"/event/"+eventKey+"/matches/simple");
-        if(matches == null) return null;
+        JSONArray matches = (JSONArray) IO.doRequest("team/frc"+number+"/event/"+eventKey+"/matches/simple");
+        if(matches == null) throw new DataNotFoundException("Couldn't find any simple matches for team with number: "+number+", event key: "+eventKey);
         SMatch[] toGet = new SMatch[matches.size()];
         for(int i = 0; i < matches.size(); i++) {
             toGet[i] = parseSMatch(matches.get(i));
@@ -315,7 +328,8 @@ public class TeamRequest extends Parser {
      * @return String[] containing an event key for each event this team has participated in
      */
     public String[] getMatchKeys(int number, String eventKey) {
-        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/event/"+eventKey+"/matches/keys");
+        JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/event/"+eventKey+"/matches/keys");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any matche keys for team with number: "+number+", event key: "+eventKey);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -329,7 +343,7 @@ public class TeamRequest extends Parser {
      */
     public Award[] getTeamEventAwards(int number, String eventKey) {
         JSONArray awards = (JSONArray) IO.doRequest("team/frc"+number+"/event/"+eventKey+"/awards");
-        if(awards == null) return null;
+        if(awards == null) throw new DataNotFoundException("Couldn't find any awards for team with number: "+number+", event key: "+eventKey);
         Award[] toGet= new Award[awards.size()];
         for(int i = 0; i < awards.size(); i++) toGet[i] = parseAward(awards.get(i));
         return toGet;
@@ -344,7 +358,7 @@ public class TeamRequest extends Parser {
      */
     public Award[] getTeamAwards(int number) {
         JSONArray awards = (JSONArray) IO.doRequest("team/frc"+number+"/awards");
-        if(awards == null) return null;
+        if(awards == null) throw new DataNotFoundException("Couldn't find any awards for team with number: "+number);
         Award[] toGet= new Award[awards.size()];
         for(int i = 0; i < awards.size(); i++) toGet[i] = parseAward(awards.get(i));
         return toGet;
@@ -360,7 +374,7 @@ public class TeamRequest extends Parser {
      */
     public Award[] getTeamAwards(int number, int year) {
         JSONArray awards = (JSONArray) IO.doRequest("team/frc"+number+"/awards/"+year);
-        if(awards == null) return null;
+        if(awards == null) throw new DataNotFoundException("Couldn't find any awards for team with number: "+number+", year: "+year);
         Award[] toGet= new Award[awards.size()];
         for(int i = 0; i < awards.size(); i++) toGet[i] = parseAward(awards.get(i));
         return toGet;
@@ -376,7 +390,7 @@ public class TeamRequest extends Parser {
      */
     public Match[] getTeamMatches(int number, int year) {
         JSONArray matches = (JSONArray) IO.doRequest("team/frc"+number+"/matches/"+year);
-        if(matches == null) return null;
+        if(matches == null)  throw new DataNotFoundException("Couldn't find any matches for team with number: "+number+", year: "+year);
         Match[] toGet = new Match[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseMatch(matches.get(i));
         return toGet;
@@ -392,7 +406,7 @@ public class TeamRequest extends Parser {
      */
     public SMatch[] getTeamSMatches(int number, int year) {
         JSONArray matches = (JSONArray) IO.doRequest("team/frc"+number+"/matches/"+year+"/simple");
-        if(matches == null) return null;
+        if(matches == null) throw new DataNotFoundException("Couldn't find any simple matches for team with number: "+number+", year: "+year);
         SMatch[] toGet = new SMatch[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseSMatch(matches.get(i));
         return toGet;
@@ -407,7 +421,8 @@ public class TeamRequest extends Parser {
      * @return String[] containing match string keys for each match
      */
     public String[] getTeamMatchKeys(int number, int year) {
-        JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/matches/"+year+"/keys");
+        JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/matches/"+year+"/keys");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any match keys for team with number: "+number+", year: "+year);
         return Utils.jsonArrayToStringArray(keys);
     }
 
@@ -421,7 +436,7 @@ public class TeamRequest extends Parser {
      */
     public Media[] getTeamMedia(int number, int year) {
         JSONArray medias = (JSONArray) IO.doRequest("team/frc"+number+"/media/"+year);
-        if(medias == null) return null;
+        if(medias == null) throw new DataNotFoundException("Couldn't find any media for team with number: "+number+", year: "+year);
         Media[] toGet = new Media[medias.size()];
         for(int i = 0; i < medias.size(); i++) toGet[i] = parseMedia(medias.get(i));
         return toGet;
@@ -436,11 +451,9 @@ public class TeamRequest extends Parser {
      */
     public Media[] getTeamSocialMedia(int number) {
         JSONArray medias = (JSONArray) IO.doRequest("team/frc"+number+"/social_media");
-        if(medias == null) return null;
+        if(medias == null) throw new DataNotFoundException("Couldn't find any social media for team with number: "+number);
         Media[] toGet = new Media[medias.size()];
         for(int i = 0; i < medias.size(); i++) toGet[i] = parseMedia(medias.get(i));
         return toGet;
     }
-
-
 }
