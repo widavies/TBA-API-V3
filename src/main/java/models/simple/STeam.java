@@ -2,6 +2,8 @@ package models.simple;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * The simple Team model as defined by the V3 TPA api.
  *
@@ -9,7 +11,7 @@ import lombok.Data;
  * @author Will Davies
  */
 @Data
-public class STeam {
+public class STeam implements Serializable {
     /**
      * TBA team key with the format frcXXXX with XXXX representing the team number.
      */

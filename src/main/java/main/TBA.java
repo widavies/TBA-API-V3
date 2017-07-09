@@ -13,7 +13,6 @@ import models.standard.Event;
 import models.standard.Match;
 import models.standard.Team;
 import requests.*;
-import utils.Constants;
 
 /**
  * This is the main interface for the API, let's talk about that.

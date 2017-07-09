@@ -6,11 +6,13 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * List of year-specific values provided in the `sort_orders` array for each team.
  */
 @Data
-public class SortInfo {
+public class SortInfo implements Serializable {
     private String name;
     private long precision;
 }

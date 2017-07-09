@@ -1,4 +1,4 @@
-package utils;
+package main;
 
 /**
  * @since 1.0.0

@@ -2,13 +2,15 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  *
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class APIStatus {
+public class APIStatus implements Serializable {
     /**
      * Year of the current FRC season.
      */

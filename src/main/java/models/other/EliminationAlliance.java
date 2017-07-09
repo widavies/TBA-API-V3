@@ -2,12 +2,14 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class EliminationAlliance {
+public class EliminationAlliance implements Serializable {
     private String name;
     private Backup[] backups;
     private String[] declines;

@@ -2,8 +2,10 @@ package models.other.teams;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Robot {
+public class Robot implements Serializable {
     /**
      * Year this robot competed in.
      */

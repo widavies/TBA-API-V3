@@ -2,11 +2,13 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Will Davies on 7/7/2017.
  */
 @Data
-public class Ranking {
+public class Ranking implements Serializable {
     /**
      * Number of times disqualified.
      */

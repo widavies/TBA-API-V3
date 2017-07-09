@@ -2,13 +2,16 @@ package models.simple;
 
 import lombok.Data;
 import models.other.matches.MatchAlliance;
+import models.standard.Match;
+
+import java.io.Serializable;
 
 /**
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class SMatch {
+public class SMatch implements Serializable, Comparable<Match> {
     /**
      * TBA event key with the format yyyy[EVENT_CODE]_[COMP_LEVEL]m[MATCH_NUMBER], where yyyy is the year, and EVENT_CODE is the event code of the event, COMP_LEVEL is (qm, ef, qf, sf, f), and MATCH_NUMBER is the match number in the competition level. A set number may append the competition level if more than one match in required per set.
      *
@@ -54,4 +57,29 @@ public class SMatch {
      * UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of actual match start time.
      */
     private long actualTime;
+
+    /**
+     * Sorts matches by:
+     * -Quals
+     * -Quarters
+     * -Semis
+     * -Finals
+     */
+
+    @Override
+    public int compareTo(Match o) {
+        long localScore = matchNumber;
+        if(compLevel.equals("qf")) localScore += 1000;
+        else if(compLevel.equals("sf")) localScore += 10000;
+        else if(compLevel.equals("f")) localScore += 100000;
+        localScore += matchNumber;
+
+        long compareScore = o.getMatchNumber();
+        if(o.getCompLevel().equals("qf")) compareScore += 1000;
+        else if(o.getCompLevel().equals("sf")) compareScore += 10000;
+        else if(o.getCompLevel().equals("f")) compareScore += 100000;
+        compareScore += o.getMatchNumber();
+
+        return Long.compare(localScore, compareScore);
+    }
 }

@@ -2,6 +2,10 @@ package models.simple;
 
 import lombok.Data;
 import models.other.District;
+import models.standard.Event;
+
+import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * This is the Simple Event Model, as defined by the V3 TBA api.
@@ -10,7 +14,7 @@ import models.other.District;
  * @author Will Davies
  */
 @Data
-public class SEvent {
+public class SEvent implements Serializable, Comparable<Event> {
     /**
      * TBA event key with the format yyyy[EVENT_CODE], where yyyy is the year, and EVENT_CODE is the event code of the event.
      */
@@ -54,4 +58,19 @@ public class SEvent {
      * Year the event data is for.
      */
     private long year;
+
+    public long getTimeInMillis(String date) {
+        String[] tokens = date.split("-");
+
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, Integer.parseInt(tokens[0]));
+        c.set(Calendar.MONTH, Integer.parseInt(tokens[1]));
+        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(tokens[2]));
+        return c.getTimeInMillis();
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return Long.compare(getTimeInMillis(startDate), getTimeInMillis(o.getStartDate()));
+    }
 }

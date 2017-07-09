@@ -1,5 +1,6 @@
 package utils;
 
+import main.Constants;
 import org.json.simple.parser.JSONParser;
 import utils.exceptions.AuthTokenNotFoundException;
 

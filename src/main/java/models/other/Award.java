@@ -2,12 +2,14 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class Award {
+public class Award implements Serializable{
     /**
      * The name of the award as provided by FIRST. May vary for the same award type.
      */

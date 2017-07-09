@@ -2,12 +2,14 @@ package models.other.matches;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class MatchAlliance {
+public class MatchAlliance implements Serializable {
     /**
      * Score for this alliance. Will be null or -1 for an unplayed match.
      */

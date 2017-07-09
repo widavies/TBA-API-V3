@@ -3,6 +3,7 @@ package requests;
 import models.other.APIStatus;
 import utils.IO;
 import utils.Parser;
+import utils.exceptions.DataNotFoundException;
 
 /**
  * @since 1.0.0
@@ -15,7 +16,10 @@ public class OtherRequest extends Parser {
      * @return APIStatus representing the state of the TBA API interface
      */
     public APIStatus getStatus() {
-        return parseStatus(IO.doRequest("status"));
+
+        APIStatus status = parseStatus(IO.doRequest("status"));
+        if (status == null) throw new DataNotFoundException("Unable to fetch API status.");
+        return status;
     }
 
     /**
@@ -24,7 +28,9 @@ public class OtherRequest extends Parser {
      * @return an Object (json formatted), representing the data received from the server
      */
     public Object customCall(String URL) {
-        return IO.doRequest(URL);
+        Object o = IO.doRequest(URL);
+        if(o == null) throw new DataNotFoundException("No response for your custom URL call");
+        return o;
     }
 
 }

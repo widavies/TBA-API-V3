@@ -2,12 +2,14 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class District {
+public class District implements Serializable {
     /**
      * The short identifier for the district.
      */

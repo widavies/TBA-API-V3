@@ -2,6 +2,7 @@ package models.other.events;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -10,7 +11,7 @@ import java.util.HashMap;
  * @author Will Davies
  */
 @Data
-public class EventOPR {
+public class EventOPR implements Serializable {
     /**
      * The team's key
      */

@@ -2,10 +2,12 @@ package models.other;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Will Davies on 7/7/2017.
  */
-public class DistrictRanking {
+public class DistrictRanking implements Serializable {
     private String teamKey;
     private long rank;
     private long rookieBonus;
