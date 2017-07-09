@@ -1,4 +1,4 @@
-package models.other.teams;
+package models.other.teams.status;
 
 import lombok.Data;
 import models.other.Ranking;

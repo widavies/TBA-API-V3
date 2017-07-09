@@ -1,7 +1,7 @@
 package models.simple;
 
 import lombok.Data;
-import models.other.teams.District;
+import models.other.District;
 
 /**
  * This is the Simple Event Model, as defined by the V3 TBA api.

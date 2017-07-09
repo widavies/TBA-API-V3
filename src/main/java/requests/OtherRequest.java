@@ -8,7 +8,6 @@ import utils.Parser;
  * @since 1.0.0
  * @author Will Davies
  */
-@SuppressWarnings("unused")
 public class OtherRequest extends Parser {
 
     /**

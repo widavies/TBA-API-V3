@@ -26,7 +26,6 @@ import utils.Utils;
  * @since 1.0.0
  * @author Will Davies
  */
-@SuppressWarnings("unused")
 public class EventRequest extends Parser {
 
     /**
@@ -211,6 +210,7 @@ public class EventRequest extends Parser {
      */
     public Award[] getEventAwards(String eventKey) {
         JSONArray array = (JSONArray) IO.doRequest("event/"+eventKey+"/awards");
+        if(array == null) return null;
         Award[] toReturn = new Award[array.size()];
         for(int i = 0; i < array.size(); i++) toReturn[i] = parseAward(array.get(i));
         return toReturn;

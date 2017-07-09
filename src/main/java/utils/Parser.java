@@ -1,6 +1,5 @@
 package utils;
 
-import jdk.nashorn.internal.scripts.JO;
 import models.other.APIStatus;
 import models.other.Award;
 import models.other.AwardRecipient;
@@ -8,9 +7,8 @@ import models.other.Media;
 import models.other.events.EventOPR;
 import models.other.events.Webcast;
 import models.other.matches.MatchAlliance;
-import models.other.teams.District;
+import models.other.District;
 import models.other.teams.Robot;
-import models.other.teams.TeamEventStatus;
 import models.simple.SEvent;
 import models.simple.SMatch;
 import models.simple.STeam;

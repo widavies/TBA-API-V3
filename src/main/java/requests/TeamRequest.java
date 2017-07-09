@@ -2,7 +2,7 @@ package requests;
 
 import models.other.Award;
 import models.other.Media;
-import models.other.teams.District;
+import models.other.District;
 import models.other.teams.Robot;
 import models.simple.SEvent;
 import models.simple.SMatch;
@@ -25,7 +25,6 @@ import utils.Utils;
  * @since 1.0.0
  * @author Will Davies
  */
-@SuppressWarnings("unused")
 public class TeamRequest extends Parser {
 
     /**
@@ -161,7 +160,7 @@ public class TeamRequest extends Parser {
      * @param number the team's frc number
      * @return District[] containing a District object for each district this team was in
      */
-    public District[] getDistricts(int number) {
+    public District[] getTeamDistricts(int number) {
         return parseDistrictList(IO.doRequest("teams/frc"+number+"/districts"));
     }
 
@@ -183,7 +182,7 @@ public class TeamRequest extends Parser {
      * @param number the team's frc number
      * @return Event[] containing an Event object for each event this team was in
      */
-    public Event[] getEvents(int number) {
+    public Event[] getTeamEvents(int number) {
         JSONArray events = (JSONArray) IO.doRequest("teams/frc"+number+"/events");
         if(events == null) return null;
         Event[] toGet = new Event[events.size()];
@@ -200,7 +199,7 @@ public class TeamRequest extends Parser {
      * @param number the team's frc number
      * @return SEvent[] containing an Event object for each event this team was in (simple model)
      */
-    public SEvent[] getSEvents(int number) {
+    public SEvent[] getTeamSEvents(int number) {
         JSONArray events = (JSONArray) IO.doRequest("teams/frc"+number+"/events/simple");
         if(events == null) return null;
         SEvent[] toGet = new SEvent[events.size()];
@@ -217,7 +216,7 @@ public class TeamRequest extends Parser {
      * @param number the team's frc number
      * @return String[] containg all the event keys for events this team is in
      */
-    public String[] getEventKeys(int number) {
+    public String[] getTeamEventKeys(int number) {
         JSONArray keys = (JSONArray) IO.doRequest("teams/frc"+number+"/events/keys");
         return Utils.jsonArrayToStringArray(keys);
     }

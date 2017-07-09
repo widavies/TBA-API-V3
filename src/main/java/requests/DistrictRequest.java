@@ -1,6 +1,6 @@
 package requests;
 
-import models.other.teams.District;
+import models.other.District;
 import models.simple.SEvent;
 import models.simple.STeam;
 import models.standard.Event;
@@ -20,7 +20,6 @@ import utils.Utils;
  * @since 1.0.0
  * @author Will Davies
  */
-@SuppressWarnings("unused")
 public class DistrictRequest extends Parser {
 
     /**
