@@ -1,6 +1,7 @@
 package models.standard;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import models.simple.STeam;
 
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import java.util.HashMap;
  *
  * Extends the simple team model
  */
+
+@EqualsAndHashCode(callSuper = false)
 @Data
 public class Team extends STeam {
     /**

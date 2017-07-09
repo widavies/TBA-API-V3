@@ -167,10 +167,10 @@ public class TeamRequest extends Parser {
      * @param number the team's frc number
      * @return District[] containing a District object for each district this team was in
      */
-    public District[] getTeamDistricts(int number) {
-        District[] districts = parseDistrictList(IO.doRequest("team/frc"+number+"/districts"));
-        if(districts == null) throw new DataNotFoundException("Couldn't team districts for team with number: "+number);
-        return districts;
+    public String[] getTeamDistricts(int number) {
+        JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/districts");
+        if(keys == null) throw new DataNotFoundException("Couldn't find any district keys for team with number: "+number);
+        return Utils.jsonArrayToStringArray(keys);
     }
 
     /**

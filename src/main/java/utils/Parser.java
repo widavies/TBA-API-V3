@@ -79,20 +79,14 @@ public class Parser {
         return team;
     }
 
-    protected District[] parseDistrictList(Object object) {
-        JSONArray districtsList = (JSONArray) object;
-        if(districtsList == null) return null;
-        District[] districts = new District[districtsList.size()];
-        for(int i = 0; i < districtsList.size(); i++) {
-            District d = new District();
-            JSONObject o = (JSONObject) districtsList.get(i);
-            d.setDisplayName((String)o.get("display_name"));
-            d.setYear(Utils.cleanLong(o.get("year")));
-            d.setAbbreviation((String)o.get("abbreviation"));
-            d.setKey((String)o.get("key"));
-            districts[i] = d;
-        }
-        return districts;
+    protected District parseDistrict(Object object) {
+        HashMap hash = (HashMap) object;
+        District d = new District();
+        d.setAbbreviation((String)hash.get("abbreviation"));
+        d.setDisplayName((String)hash.get("display_name"));
+        d.setKey((String)hash.get("key"));
+        d.setYear(Utils.cleanLong(hash.get("year")));
+        return d;
     }
 
     protected Robot[] parseRobots(Object object) {
@@ -139,7 +133,7 @@ public class Parser {
         e.setParentEventkey((String)hash.get("parent_event_key"));
         e.setPlayoffType(Utils.cleanLong(hash.get("playoff_type")));
         e.setPlayoffTypeString((String)hash.get("playoff_type_string"));
-        e.setDistrictsList(parseDistrictList(hash.get("district")));
+        e.setDistrict(parseDistrict(hash.get("district")));
         JSONArray keys = (JSONArray) hash.get("division_keys");
         e.setDivisonKeys(Utils.jsonArrayToStringArray(keys));
         JSONArray webcasts = (JSONArray) hash.get("webcasts");
@@ -168,7 +162,7 @@ public class Parser {
         e.setStartDate((String)hash.get("start_date"));
         e.setEndDate((String)hash.get("end_Date"));
         e.setYear(Utils.cleanLong(hash.get("year")));
-        e.setDistrictsList(parseDistrictList(hash.get("district")));
+        e.setDistrict(parseDistrict(hash.get("district")));
         return e;
     }
 
@@ -285,20 +279,10 @@ public class Parser {
             opr.setOpr(Utils.cleanDouble(oprs.get(oprs.keySet().toArray()[i])));
             opr.setDpr(Utils.cleanDouble(dprs.get(dprs.keySet().toArray()[i])));
             opr.setCcwm(Utils.cleanDouble(ccwms.get(ccwms.keySet().toArray()[i])));
+            opr.setTeamKey((String)oprs.keySet().toArray()[i]);
             toReturn[i] = opr;
         }
 
         return toReturn;
     }
-
-    protected District parseDistrict(Object object) {
-        HashMap hash = (HashMap) object;
-        District d = new District();
-        d.setKey((String)hash.get("key"));
-        d.setAbbreviation((String)hash.get("abbreviation"));
-        d.setDisplayName((String)hash.get("display_name"));
-        d.setYear(Utils.cleanLong(hash.get("year")));
-        return d;
-    }
-
 }

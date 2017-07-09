@@ -35,7 +35,7 @@ public class SEvent implements Serializable, Comparable<Event> {
     /**
      * Districts array
      */
-    private District[] districtsList;
+    private District district;
 
     /**
      * State or Province the event is located in.

@@ -421,7 +421,7 @@ public class CTBA {
      * Gets the districts this team was in, empty array if none
      * @return District[] containing a District object for each district this team was in
      */
-    public District[] getTeamDistricts() {
+    public String[] getTeamDistricts() {
         return tr.getTeamDistricts(number);
     }
 

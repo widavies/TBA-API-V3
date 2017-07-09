@@ -442,7 +442,7 @@ public class TBA {
      * @param number the team's frc number
      * @return District[] containing a District object for each district this team was in
      */
-    public District[] getTeamDistricts(int number) {
+    public String[] getTeamDistricts(int number) {
         return tr.getTeamDistricts(number);
     }
 
