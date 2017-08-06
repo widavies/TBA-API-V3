@@ -82,6 +82,7 @@ public class Parser {
     protected District parseDistrict(Object object) {
         HashMap hash = (HashMap) object;
         District d = new District();
+        if(hash == null) return null;
         d.setAbbreviation((String)hash.get("abbreviation"));
         d.setDisplayName((String)hash.get("display_name"));
         d.setKey((String)hash.get("key"));
