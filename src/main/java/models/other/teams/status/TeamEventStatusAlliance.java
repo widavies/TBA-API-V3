@@ -15,7 +15,7 @@ public class TeamEventStatusAlliance {
     /**
      * Alliance number.
      */
-    private int number;
+    private long number;
     /**
      * Backup status, may be null.
      */
@@ -23,5 +23,5 @@ public class TeamEventStatusAlliance {
     /**
      * Order the team was picked in the alliance from 0-2, with 0 being alliance captain.
      */
-    private int pick;
+    private long pick;
 }

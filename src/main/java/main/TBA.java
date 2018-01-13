@@ -6,6 +6,7 @@ import models.other.District;
 import models.other.Media;
 import models.other.events.EventOPR;
 import models.other.teams.Robot;
+import models.other.teams.status.TeamEventStatus;
 import models.simple.SEvent;
 import models.simple.SMatch;
 import models.simple.STeam;
@@ -490,6 +491,18 @@ public class TBA {
      */
     public String[] getTeamEventKeys(int number) {
         return tr.getTeamEventKeys(number);
+    }
+
+    /**
+     * Mirror of: /team/{team_key}/event/{event_key}/status
+     *
+     * Gets a list of the event keys for all events this team has competed at.
+     * @param number the team's frc number
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return TeamEventStatus[] that gets the competition rank and status of the team at the given event.
+     */
+    public TeamEventStatus getTeamEventStatus(int number, String eventKey){
+        return tr.getTeamEventStatus(number, eventKey);
     }
 
     /**

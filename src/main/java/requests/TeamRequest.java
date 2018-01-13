@@ -4,6 +4,7 @@ import models.other.Award;
 import models.other.Media;
 import models.other.District;
 import models.other.teams.Robot;
+import models.other.teams.status.TeamEventStatus;
 import models.simple.SEvent;
 import models.simple.SMatch;
 import models.simple.STeam;
@@ -11,6 +12,7 @@ import models.standard.Event;
 import models.standard.Match;
 import models.standard.Team;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import utils.IO;
 import utils.Parser;
 import utils.Utils;
@@ -231,6 +233,20 @@ public class TeamRequest extends Parser {
         JSONArray keys = (JSONArray) IO.doRequest("team/frc"+number+"/events/keys");
         if(keys == null) throw new DataNotFoundException("Couldn't find any event keys for team with number: "+number);
         return Utils.jsonArrayToStringArray(keys);
+    }
+
+    /**
+     * Mirror of: /team/{team_key}/event/{event_key}/status
+     *
+     * Gets a list of the event keys for all events this team has competed at.
+     * @param number the team's frc number
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return TeamEventStatus[] that gets the competition rank and status of the team at the given event.
+     */
+    public TeamEventStatus getTeamEventStatus(int number, String eventKey){
+        JSONObject status = (JSONObject) IO.doRequest("team/frc"+number+"/event/"+eventKey+"/status");
+        if(status == null) throw new DataNotFoundException("Couldn't find any event status for team with number: frc"+number+" at event "+eventKey);
+        return parseTeamEventStatus(status);
     }
 
     /**

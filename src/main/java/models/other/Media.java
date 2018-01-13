@@ -17,7 +17,7 @@ public class Media implements Serializable {
     /**
      * String type of the media element.
      */
-    private String type;
+    private String[] type;
     /**
      * The key used to identify this media on the media site.
      */

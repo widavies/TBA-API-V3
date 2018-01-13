@@ -29,4 +29,18 @@ public class Utils {
         return toReturn;
     }
 
+    public static long[] jsonArrayToLongArray(JSONArray jsonArray){
+        if(jsonArray == null) return null;
+        long[] toReturn = new long[jsonArray.size()];
+        for(int i = 0; i < jsonArray.size(); i++) toReturn[i] = cleanLong(jsonArray.get(i));
+        return toReturn;
+    }
+
+    public static double[] jsonArrayToDoublesArray(JSONArray jsonArray){
+        if(jsonArray == null) return null;
+        double[] toReturn = new double[jsonArray.size()];
+        for(int i = 0; i < jsonArray.size(); i++) toReturn[i] = cleanDouble(jsonArray.get(i));
+        return toReturn;
+    }
+
 }

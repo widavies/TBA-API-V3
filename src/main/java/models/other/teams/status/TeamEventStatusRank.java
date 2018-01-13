@@ -12,8 +12,8 @@ public class TeamEventStatusRank {
     /**
      * Number of teams ranked.
      */
-    private int numTeams;
-    private Ranking[] ranking;
+    private Long numTeams;
+    private Ranking ranking;
     /**
      * Ordered list of names corresponding to the elements of the `sort_orders` array.
      */
