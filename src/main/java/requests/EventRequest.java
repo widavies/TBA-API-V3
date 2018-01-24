@@ -15,6 +15,8 @@ import utils.Utils;
 import utils.exceptions.DataNotFoundException;
 
 import javax.xml.crypto.Data;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /events/ or /event/
@@ -184,6 +186,7 @@ public class EventRequest extends Parser {
         if(matches == null)  throw new DataNotFoundException("No matches found for event with key: "+eventKey);
         Match[] toGet = new Match[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseMatch(matches.get(i));
+        Collections.sort(Arrays.asList(toGet));
         return toGet;
     }
 
@@ -199,6 +202,7 @@ public class EventRequest extends Parser {
         if(matches == null)  throw new DataNotFoundException("No simple matches found for event with key: "+eventKey);
         SMatch[] toGet = new SMatch[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseSMatch(matches.get(i));
+        Collections.sort(Arrays.asList(toGet));
         return toGet;
     }
 
