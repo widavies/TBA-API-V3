@@ -1,14 +1,11 @@
 package utils;
 
-import models.other.APIStatus;
-import models.other.Award;
-import models.other.AwardRecipient;
-import models.other.Media;
+import models.other.*;
 import models.other.events.EventOPR;
 import models.other.events.Webcast;
 import models.other.matches.MatchAlliance;
-import models.other.District;
 import models.other.teams.Robot;
+import models.other.teams.status.*;
 import models.simple.SEvent;
 import models.simple.SMatch;
 import models.simple.STeam;
@@ -167,11 +164,100 @@ public class Parser {
         return e;
     }
 
+    protected TeamEventStatus parseTeamEventStatus(Object object){
+        TeamEventStatus t = new TeamEventStatus();
+        HashMap hash = (HashMap) object;
+        t.setQual(parseTeamEventStatusRank(hash.get("qual")));
+        t.setAlliance(parseTeamEventStatusAlliance(hash.get("alliance")));
+        t.setPlayoff(parseTeamEventStatusPlayoff(hash.get("playoff")));
+        t.setAllianceStatus((String)hash.get("alliance_status_str"));
+        t.setPlayoffStatus((String)hash.get("playoff_status_str"));
+        t.setOverallStatus((String)hash.get("overall_status_str"));
+        return t;
+    }
+
+    protected TeamEventStatusRank parseTeamEventStatusRank(Object object){
+        TeamEventStatusRank t = new TeamEventStatusRank();
+        HashMap hash = (HashMap) object;
+        t.setNumTeams(Utils.cleanLong(hash.get("num_teams")));
+        t.setRanking(parseRanking(hash.get("ranking")));
+        JSONArray sortOrderList = (JSONArray)hash.get("sort_order_info");
+        SortInfo[] si = new SortInfo[sortOrderList.size()];
+        for(int i = 0; i < sortOrderList.size(); i++) {
+            si[i] = parseSortInfo(sortOrderList.get(i));
+        }
+        t.setSortOrderInfo(si);
+        return t;
+    }
+
+    protected Ranking parseRanking(Object object){
+        Ranking r = new Ranking();
+        HashMap hash = (HashMap) object;
+        r.setDq(Utils.cleanLong(hash.get("dq")));
+        r.setMatchesPlayed(Utils.cleanLong(hash.get("matches_played")));
+        r.setQualAverage(Utils.cleanDouble(hash.get("qual_average")));
+        r.setRank(Utils.cleanLong(hash.get("rank")));
+        r.setQualificationsRecord(parseWLTRecord(hash.get("record")));
+        r.setOverallRecord(null);
+        JSONArray sortOrders = (JSONArray)hash.get("sort_orders");
+        r.setSortOrders(Utils.jsonArrayToDoublesArray(sortOrders));
+        r.setTeamKey((String)hash.get("team_key"));
+        return r;
+    }
+
+    protected WLTRecord parseWLTRecord(Object object){
+        WLTRecord w = new WLTRecord();
+        HashMap hash = (HashMap) object;
+        w.setLosses(Utils.cleanLong(hash.get("losses")));
+        w.setWins(Utils.cleanLong(hash.get("wins")));
+        w.setTies(Utils.cleanLong(hash.get("ties")));
+        return w;
+    }
+
+    protected SortInfo parseSortInfo(Object object){
+        SortInfo s = new SortInfo();
+        HashMap hash = (HashMap) object;
+        s.setName((String)hash.get("name"));
+        s.setPrecision(Utils.cleanLong(hash.get("precision")));
+        return s;
+    }
+
+    protected TeamEventStatusAlliance parseTeamEventStatusAlliance(Object object){
+        TeamEventStatusAlliance t = new TeamEventStatusAlliance();
+        HashMap hash = (HashMap) object;
+        t.setName((String)hash.get("name"));
+        t.setNumber(Utils.cleanLong(hash.get("number")));
+        t.setBackup(parseTeamEventStatusAllianceBackup(hash.get("backup")));
+        t.setPick(Utils.cleanLong(hash.get("pick")));
+        return t;
+    }
+
+    protected TeamEventStatusAllianceBackup parseTeamEventStatusAllianceBackup(Object object){
+        TeamEventStatusAllianceBackup t = new TeamEventStatusAllianceBackup();
+        HashMap hash = (HashMap) object;
+        if(hash == null)return null;
+        t.setOut((String)hash.get("out"));
+        t.setIn((String)hash.get("in"));
+        return t;
+    }
+
+    protected TeamEventStatusPlayoff parseTeamEventStatusPlayoff(Object object){
+        TeamEventStatusPlayoff t = new TeamEventStatusPlayoff();
+        HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+        t.setLevel((String)hash.get("level"));
+        t.setCurrentLevelRecord(parseWLTRecord(hash.get("current_level_record")));
+        t.setRecord(parseWLTRecord(hash.get("record")));
+        t.setStatus((String)hash.get("status"));
+        t.setPlayoffAverage(Utils.cleanLong(hash.get("playoff_average")));
+        return t;
+    }
+
     protected Media parseMedia(Object object) {
         Media media = new Media();
         HashMap hash = (HashMap)object;
         media.setKey((String)hash.get("key"));
-        media.setType((String)hash.get("type"));
+        media.setType(Utils.jsonArrayToStringArray((JSONArray)hash.get("type")));
         media.setForeignKey((String)hash.get("foreign_key"));
         media.setDetails((String)hash.get("details"));
         media.setPreferred(Utils.cleanBoolean(hash.get("preferred")));

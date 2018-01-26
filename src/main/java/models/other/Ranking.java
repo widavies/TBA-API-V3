@@ -20,7 +20,7 @@ public class Ranking implements Serializable {
     /**
      * The average match score during qualifications. Year specific. May be null if not relevant for a given year.
      */
-    private long qualAverage;
+    private double qualAverage;
     /**
      * The team’s rank at the event as provided by FIRST.
      */
@@ -38,7 +38,7 @@ public class Ranking implements Serializable {
     /**
      * Additional year-specific information, may be null. See parent `sort_order_info` for details.
      */
-    private long[] sortOrders;
+    private double[] sortOrders;
     /**
      * The team with this rank.
      */
