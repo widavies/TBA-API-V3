@@ -23,6 +23,7 @@ import java.util.HashMap;
 /**
  * Converts the data received from the server into the models found in models/
  *
+ *
  * @since 1.0.0
  * @author Will Davies
  */
