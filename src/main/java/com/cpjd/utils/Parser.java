@@ -194,10 +194,11 @@ public class Parser {
         JSONObject allies = (JSONObject) hash.get("alliances");
         if(allies != null) {
             JSONObject blue = (JSONObject) allies.get("blue");
-            JSONObject red = (JSONObject) allies.get("blue");
+            JSONObject red = (JSONObject) allies.get("red");
             MatchAlliance redAlly = new MatchAlliance();
             MatchAlliance blueAlly = new MatchAlliance();
             redAlly.setScore(Utils.cleanLong(red.get("score")));
+            blueAlly.setScore(Utils.cleanLong(blue.get("score")));
             JSONArray redTeamKeys = (JSONArray) red.get("team_keys");
             JSONArray blueTeamKeys = (JSONArray) blue.get("team_keys");
             redAlly.setTeamKeys(Utils.jsonArrayToStringArray(redTeamKeys));
@@ -231,10 +232,11 @@ public class Parser {
         JSONObject allies = (JSONObject) hash.get("alliances");
         if(allies != null) {
             JSONObject blue = (JSONObject) allies.get("blue");
-            JSONObject red = (JSONObject) allies.get("blue");
+            JSONObject red = (JSONObject) allies.get("red");
             MatchAlliance redAlly = new MatchAlliance();
             MatchAlliance blueAlly = new MatchAlliance();
             redAlly.setScore(Utils.cleanLong(red.get("score")));
+            blueAlly.setScore(Utils.cleanLong(blue.get("score")));
             JSONArray redTeamKeys = (JSONArray) red.get("team_keys");
             JSONArray blueTeamKeys = (JSONArray) blue.get("team_keys");
             redAlly.setTeamKeys(Utils.jsonArrayToStringArray(redTeamKeys));
