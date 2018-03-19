@@ -168,7 +168,11 @@ public class Parser {
         TeamEventStatus t = new TeamEventStatus();
         HashMap hash = (HashMap) object;
         t.setQual(parseTeamEventStatusRank(hash.get("qual")));
-        t.setAlliance(parseTeamEventStatusAlliance(hash.get("alliance")));
+        t.setAlliance(new TeamEventStatusAlliance());
+        if(hash.get("alliance") != null){
+            t.setAlliance(parseTeamEventStatusAlliance(hash.get("alliance")));
+        }
+
         t.setPlayoff(parseTeamEventStatusPlayoff(hash.get("playoff")));
         t.setAllianceStatus((String)hash.get("alliance_status_str"));
         t.setPlayoffStatus((String)hash.get("playoff_status_str"));
