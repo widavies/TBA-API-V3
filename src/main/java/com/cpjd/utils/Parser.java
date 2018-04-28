@@ -1,5 +1,6 @@
 package com.cpjd.utils;
 
+import com.cpjd.models.ScoreBreakdown;
 import com.cpjd.models.other.APIStatus;
 import com.cpjd.models.other.Award;
 import com.cpjd.models.other.AwardRecipient;
@@ -15,6 +16,7 @@ import com.cpjd.models.simple.STeam;
 import com.cpjd.models.standard.Event;
 import com.cpjd.models.standard.Match;
 import com.cpjd.models.standard.Team;
+import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -192,6 +194,19 @@ public class Parser {
         m.setActualTime(Utils.cleanLong(hash.get("actual_time")));
         m.setPredictedTime(Utils.cleanLong(hash.get("predicted_time")));
         m.setPostResultTime(Utils.cleanLong(hash.get("post_result_time")));
+        try {
+            JSONObject obj = (JSONObject)hash.get("score_breakdown");
+            ScoreBreakdown red = new ScoreBreakdown();
+            red.setRed(true);
+            red.setValues(new HashMap<String, Object>((JSONObject)obj.get("red")));
+            m.setRedScoreBreakdown(red);
+            ScoreBreakdown blue = new ScoreBreakdown();
+            blue.setRed(false);
+            blue.setValues(new HashMap<String, Object>((JSONObject)obj.get("blue")));
+            m.setBlueScoreBreakdown(blue);
+        } catch(Exception e) {}
+
+       // m.setScoreBreakdown((String)hash.get("score_breakdown"));
         JSONObject allies = (JSONObject) hash.get("alliances");
         if(allies != null) {
             JSONObject blue = (JSONObject) allies.get("blue");

@@ -1,5 +1,6 @@
 package com.cpjd.models.standard;
 
+import com.cpjd.models.ScoreBreakdown;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.cpjd.models.other.Media;
@@ -21,7 +22,8 @@ public class Match extends SMatch {
      *
      Score breakdown for auto, teleop, etc. points. Varies from year to year. May be null.
      */
-    private String scoreBreakdown;
+    private ScoreBreakdown redScoreBreakdown;
+    private ScoreBreakdown blueScoreBreakdown;
     /**
      * Array of `Media` objects associated with this match.
      */
