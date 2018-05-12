@@ -49,6 +49,6 @@ If you'd like any more functionality as far as ways you can pull data, and what 
 
 # Roblu
 This API is using in my scouting app Roblu. It's an all-in-one solution to scouting.
-Check it out at: https://github.com/frcroblu/Roblu
+Check it out at: https://www.roblu.net
 
 
