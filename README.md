@@ -17,7 +17,7 @@ This API also requires json-simple. Download the .jar file at https://code.googl
 TBA-API-V3 is modeled exactly off of the API specifications described at https://www.thebluealliance.com/apidocs/v3. All API
 calls found on this page are implemented in Java (or will be soon). Models can be found in the ```models``` package, if a model
 begins with a 'S', it represents a ```simple``` model as defined by the V3 API. To get started using the API, set the
-API read AUTH token with Constants.AUTH = "<auth-token>". Create a ```TBA``` object for usage with no constructors (better if parameters
+API read AUTH token with `Constants.AUTH = "<auth-token>"`. Create a ```TBA``` object for usage with no constructors (better if parameters
 will be changed frequently) and a ```CTBA``` object for usage with constructors (better if parameters won't be changed frequently).
 For more information, visit the wiki at https://www.github.com/wdavies973/TBA-API-V3/wiki.
 
@@ -48,7 +48,7 @@ Report any bugs or suggestions to wdavies973@gmail.com
 If you'd like any more functionality as far as ways you can pull data, and what you can pull, let me know and I'll add it right away.
 
 # Roblu
-This API is using in my scouting app Roblu. It's an all-in-one solution to scouting.
-Check it out at: https://github.com/frcroblu/Roblu
+This API is used by my scouting app Roblu. It's an all-in-one solution for scouting.
+Check it out at: https://www.roblu.net
 
 
