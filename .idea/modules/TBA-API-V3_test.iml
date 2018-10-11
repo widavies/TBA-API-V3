@@ -11,7 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="TBA-API-V3_main" />
     <orderEntry type="library" name="Gradle: com.github.fangyidong:json-simple:tag_release_1_1_1" level="project" />
-    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
+    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.18.0" level="project" />
     <orderEntry type="library" name="Gradle: javax.annotation:jsr250-api:1.0" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
