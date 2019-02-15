@@ -1,10 +1,7 @@
 package com.cpjd.main;
 
+import com.cpjd.models.other.*;
 import lombok.Data;
-import com.cpjd.models.other.APIStatus;
-import com.cpjd.models.other.Award;
-import com.cpjd.models.other.District;
-import com.cpjd.models.other.Media;
 import com.cpjd.models.other.events.EventOPR;
 import com.cpjd.models.other.teams.Robot;
 import com.cpjd.models.simple.SEvent;
@@ -180,6 +177,13 @@ public class CTBA {
     public Event[] getEvents() {
         return er.getEvents(year);
     }
+
+    /**
+     * Mirror of: /event/{event_key}/rankings
+     * <p>
+     * @return EventRanking[] containing rankings of teams in this event
+     */
+    public EventRanking[] getEventRankings() { return er.getEventRankings(eventKey); }
 
     /**
      * Mirror of: /events/{year}/simple

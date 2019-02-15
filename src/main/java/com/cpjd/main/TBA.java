@@ -1,9 +1,6 @@
 package com.cpjd.main;
 
-import com.cpjd.models.other.APIStatus;
-import com.cpjd.models.other.Award;
-import com.cpjd.models.other.District;
-import com.cpjd.models.other.Media;
+import com.cpjd.models.other.*;
 import com.cpjd.models.other.events.EventOPR;
 import com.cpjd.models.other.teams.Robot;
 
@@ -540,6 +537,13 @@ public class TBA {
     public Match[] getTeamEventMatches(int number, String eventKey) {
         return tr.getTeamEventMatches(number, eventKey);
     }
+
+    /**
+     * Mirror of: /event/{event_key}/rankings
+     * @param eventKey the event's key code (example: '2016nytr')
+     * @return EventRanking[] containing rankings of teams in this event
+     */
+    public EventRanking[] getEventRankings(String eventKey) {return er.getEventRankings(eventKey); }
 
     /**
      * Mirror of: /team/{team_key}/event/{event_key}/matches/simple

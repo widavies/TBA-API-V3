@@ -9,6 +9,8 @@ import org.json.simple.JSONObject;
 
 public class Test {
     public static void main(String[] args) {
+        TBA.setAuthToken("xgqQi9cACRSUt4xanOto70jLPxhz4lR2Mf83e2iikyR2vhOmr1Kvg1rDBlAQcOJg");
+
         // Case 1
 //        Match[] matches = new TBA().getMatches("2018txpa");
 //        System.out.println(matches.length);
@@ -33,6 +35,7 @@ public class Test {
 
         EventRanking[] rankings = new EventRequest().getEventRankings("2018code");
         System.out.println(rankings[0].getWins());
+        System.out.println(rankings[0].getRank());
     }
 
 }

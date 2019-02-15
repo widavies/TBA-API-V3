@@ -239,8 +239,8 @@ public class Parser {
         ranking.setSortOrders(Utils.jsonArrayToDoubleArray((JSONArray)hash.get("sort_orders")));
         ranking.setExtraStats(Utils.jsonArrayToLongArray((JSONArray)hash.get("extra_stats")));
         ranking.setWins(Utils.cleanLong(((JSONObject) hash.get("record")).get("wins")));
-        ranking.setLosses(Utils.cleanLong(((JSONObject) hash.get("record")).get("ties")));
-        ranking.setTies(Utils.cleanLong(((JSONObject) hash.get("record")).get("losses")));
+        ranking.setTies(Utils.cleanLong(((JSONObject) hash.get("record")).get("ties")));
+        ranking.setLosses(Utils.cleanLong(((JSONObject) hash.get("record")).get("losses")));
         return ranking;
     }
 
