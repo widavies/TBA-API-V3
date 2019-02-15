@@ -1,6 +1,7 @@
 package com.cpjd.requests;
 
 import com.cpjd.models.other.Award;
+import com.cpjd.models.other.EventRanking;
 import com.cpjd.models.other.events.EventOPR;
 import com.cpjd.models.simple.SEvent;
 import com.cpjd.models.simple.SMatch;
@@ -13,6 +14,7 @@ import com.cpjd.utils.IO;
 import com.cpjd.utils.Parser;
 import com.cpjd.utils.Utils;
 import com.cpjd.utils.exceptions.DataNotFoundException;
+import org.json.simple.JSONObject;
 
 /**
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /events/ or /event/
@@ -226,6 +228,21 @@ public class EventRequest extends Parser {
         Award[] toReturn = new Award[array.size()];
         for(int i = 0; i < array.size(); i++) toReturn[i] = parseAward(array.get(i));
         return toReturn;
+    }
+
+    /**
+     * Mirror of: /event/{event_key}/rankings
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return EventRanking[] containing rankings of teams in this event
+     */
+    public EventRanking[] getEventRankings(String eventKey) {
+        JSONObject ranking = (JSONObject) (IO.doRequest("event/"+eventKey+"/rankings"));
+
+        if(ranking == null)  throw new DataNotFoundException("No rankings found for event with key: "+eventKey);
+        JSONArray rankings = (JSONArray) ranking.get("rankings");
+        EventRanking[] toGet = new EventRanking[rankings.size()];
+        for(int i = 0; i < rankings.size(); i++) toGet[i] = parseEventRanking(rankings.get(i));
+        return toGet;
     }
 
 }

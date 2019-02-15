@@ -1,14 +1,10 @@
 package com.cpjd.utils;
 
 import com.cpjd.models.ScoreBreakdown;
-import com.cpjd.models.other.APIStatus;
-import com.cpjd.models.other.Award;
-import com.cpjd.models.other.AwardRecipient;
-import com.cpjd.models.other.Media;
+import com.cpjd.models.other.*;
 import com.cpjd.models.other.events.EventOPR;
 import com.cpjd.models.other.events.Webcast;
 import com.cpjd.models.other.matches.MatchAlliance;
-import com.cpjd.models.other.District;
 import com.cpjd.models.other.teams.Robot;
 import com.cpjd.models.simple.SEvent;
 import com.cpjd.models.simple.SMatch;
@@ -230,6 +226,22 @@ public class Parser {
         for(int i = 0; i < videos.size(); i++) medias[i] = parseMedia(videos.get(i));
         m.setVideos(medias);
         return m;
+    }
+
+    protected EventRanking parseEventRanking(Object object) {
+        EventRanking ranking = new EventRanking();
+        HashMap hash = (HashMap) object;
+        ranking.setMatchesPlayed(Utils.cleanLong(hash.get("matches_played")));
+        ranking.setQualAverage(Utils.cleanLong(hash.get("qual_average")));
+        ranking.setRank(Utils.cleanLong(hash.get("rank")));
+        ranking.setDq(Utils.cleanLong(hash.get("dq")));
+        ranking.setTeamKey((String)hash.get("team_key"));
+        ranking.setSortOrders(Utils.jsonArrayToDoubleArray((JSONArray)hash.get("sort_orders")));
+        ranking.setExtraStats(Utils.jsonArrayToLongArray((JSONArray)hash.get("extra_stats")));
+        ranking.setWins(Utils.cleanLong(((JSONObject) hash.get("record")).get("wins")));
+        ranking.setLosses(Utils.cleanLong(((JSONObject) hash.get("record")).get("ties")));
+        ranking.setTies(Utils.cleanLong(((JSONObject) hash.get("record")).get("losses")));
+        return ranking;
     }
 
     protected SMatch parseSMatch(Object object) {
