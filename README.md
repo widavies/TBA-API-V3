@@ -54,7 +54,7 @@ Find them at https://www.github.com/wdavies973/TBA-API-V3/wiki.
 
 # Future
 I plan on supporting this project continually since it's used extensively in my scouting app over at https://www.roblu.net.
-Any contributions are welcome, including letting me know about bugs, features you'd like, and more.
+Any contributions are welcome, including bug reports, feature requests, or code contributions.
 
 # Other
 Report any bugs or suggestions to wdavies973@gmail.com
