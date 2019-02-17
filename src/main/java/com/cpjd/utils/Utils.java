@@ -12,6 +12,11 @@ public class Utils {
         else return (long)object;
     }
 
+    public static int cleanInt(Object object) {
+        if(object == null) return 0;
+        else return (int)object;
+    }
+
     public static double cleanDouble(Object object) {
         if(object == null) return 0;
         else return (double)object;

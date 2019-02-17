@@ -1,4 +1,4 @@
-package com.cpjd.models.other;
+package com.cpjd.models.events;
 
 import lombok.Data;
 

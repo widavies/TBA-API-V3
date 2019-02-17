@@ -1,10 +1,10 @@
-package com.cpjd.models.standard;
+package com.cpjd.models.matches;
 
-import com.cpjd.models.ScoreBreakdown;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.cpjd.models.other.Media;
-import com.cpjd.models.simple.SMatch;
+import com.cpjd.models.events.Media;
+
+import java.util.HashMap;
 
 /**
  * @since 1.0.0
@@ -21,9 +21,12 @@ public class Match extends SMatch {
     /**
      *
      Score breakdown for auto, teleop, etc. points. Varies from year to year. May be null.
+
+     These are year specific, so it's up to you to determine what you'd like to fetch.
+
      */
-    private ScoreBreakdown redScoreBreakdown;
-    private ScoreBreakdown blueScoreBreakdown;
+    private HashMap<String, Object> redScoreBreakdown;
+    private HashMap<String, Object> blueScoreBreakdown;
     /**
      * Array of `Media` objects associated with this match.
      */

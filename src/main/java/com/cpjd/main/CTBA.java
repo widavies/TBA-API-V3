@@ -1,15 +1,14 @@
 package com.cpjd.main;
 
-import com.cpjd.models.other.*;
+import com.cpjd.models.APIStatus;
+import com.cpjd.models.districts.District;
+import com.cpjd.models.events.*;
 import lombok.Data;
-import com.cpjd.models.other.events.EventOPR;
-import com.cpjd.models.other.teams.Robot;
-import com.cpjd.models.simple.SEvent;
-import com.cpjd.models.simple.SMatch;
-import com.cpjd.models.simple.STeam;
-import com.cpjd.models.standard.Event;
-import com.cpjd.models.standard.Match;
-import com.cpjd.models.standard.Team;
+import com.cpjd.models.teams.Robot;
+import com.cpjd.models.matches.SMatch;
+import com.cpjd.models.teams.STeam;
+import com.cpjd.models.matches.Match;
+import com.cpjd.models.teams.Team;
 import com.cpjd.requests.*;
 
 /**
@@ -607,5 +606,23 @@ public class CTBA {
      */
     public Media[] getTeamSocialMedia() {
         return tr.getTeamSocialMedia(number);
+    }
+
+    /**
+     * Mirror of: /event/{event_key}/alliances
+     *
+     * @return List of all alliances in this event
+     */
+    public Alliance[] getEventAlliances() {
+        return er.getEventAlliances(eventKey);
+    }
+
+    /**
+     * Mirror of: /event/{event_key}/insights
+     *
+     * @return Insights for this event
+     */
+    public Insight getEventInsights() {
+        return er.getEventInsights(eventKey);
     }
 }

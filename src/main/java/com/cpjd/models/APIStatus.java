@@ -1,4 +1,4 @@
-package com.cpjd.models.other;
+package com.cpjd.models;
 
 import lombok.Data;
 import lombok.Getter;
@@ -32,6 +32,5 @@ public class APIStatus implements Serializable {
     private long iosLatestAppVersion;
     private long androidMinAppVersion;
     private long androidLatestAppVersion;
-
 
 }

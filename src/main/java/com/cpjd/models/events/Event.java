@@ -1,9 +1,9 @@
-package com.cpjd.models.standard;
+package com.cpjd.models.events;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.cpjd.models.other.events.Webcast;
-import com.cpjd.models.simple.SEvent;
+import com.cpjd.models.events.Webcast;
+import com.cpjd.models.events.SEvent;
 
 /**
  * Events represent FIRST Robotics Competition events, both official and unofficial.
@@ -25,7 +25,7 @@ public class Event extends SEvent {
      */
     private String shortName;
     /**
-     * Event Type, eg Regional, District, or Offseason.
+     * Event SortingType, eg Regional, District, or Offseason.
      */
     private String eventTypeString;
     /**
@@ -41,7 +41,7 @@ public class Event extends SEvent {
      */
     private String parentEventkey;
     /**
-     * Playoff Type, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/playoff_type.py#L4, or null.
+     * Playoff SortingType, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/playoff_type.py#L4, or null.
      */
     private long playoffType;
     /**

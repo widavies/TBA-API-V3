@@ -1,20 +1,19 @@
 package com.cpjd.requests;
 
-import com.cpjd.models.other.Award;
-import com.cpjd.models.other.EventRanking;
-import com.cpjd.models.other.events.EventOPR;
-import com.cpjd.models.simple.SEvent;
-import com.cpjd.models.simple.SMatch;
-import com.cpjd.models.simple.STeam;
-import com.cpjd.models.standard.Event;
-import com.cpjd.models.standard.Match;
-import com.cpjd.models.standard.Team;
+import com.cpjd.main.TBA;
+import com.cpjd.models.events.*;
+import com.cpjd.models.matches.SMatch;
+import com.cpjd.models.teams.STeam;
+import com.cpjd.models.matches.Match;
+import com.cpjd.models.teams.Team;
 import org.json.simple.JSONArray;
 import com.cpjd.utils.IO;
 import com.cpjd.utils.Parser;
 import com.cpjd.utils.Utils;
 import com.cpjd.utils.exceptions.DataNotFoundException;
 import org.json.simple.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * In an attempt to keep this API organized, if you look at the blue alliance v3 documentation, all calls that start with /events/ or /event/
@@ -43,6 +42,7 @@ public class EventRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("Couldn't find any teams in event with key: "+eventKey);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -58,6 +58,7 @@ public class EventRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("Couldn't find any simple teams in event with key: "+eventKey);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseSTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -86,6 +87,7 @@ public class EventRequest extends Parser {
         if(events == null) throw new DataNotFoundException("Couldn't find any events in year: "+year);
         Event[] toGet = new Event[events.size()];
         for(int i = 0; i < events.size(); i++) toGet[i] = parseEvent(events.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -101,6 +103,7 @@ public class EventRequest extends Parser {
         if(events == null) throw new DataNotFoundException("Couldn't find any simple events in year: "+year);
         SEvent[] toGet = new SEvent[events.size()];
         for(int i = 0; i < events.size(); i++) toGet[i] = parseSEvent(events.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -143,6 +146,33 @@ public class EventRequest extends Parser {
         return event;
     }
 
+    /**
+     * Mirror of: /event/{event_key}/alliances
+     *
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return List of all alliances in this event
+     */
+    public Alliance[] getEventAlliances(String eventKey) {
+        JSONArray alliances = (JSONArray) IO.doRequest("event/"+eventKey+"/alliances");
+        if(alliances == null) throw new DataNotFoundException("No alliances found for event with key: "+eventKey);
+        Alliance[] toGet = new Alliance[alliances.size()];
+        for(int i = 0; i < alliances.size(); i++) toGet[i] = parseEventAlliance(alliances.get(i));
+        TBA.sort(toGet);
+        return toGet;
+    }
+
+    /**
+     * Mirror of: /event/{event_key}/insights
+     *
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return Insights for this event
+     */
+    public Insight getEventInsights(String eventKey) {
+        JSONObject insights = (JSONObject) IO.doRequest("event/"+eventKey+"/insights");
+        Insight toReturn = parseInsight(insights);
+        if(toReturn == null) throw new DataNotFoundException("No insights found for event with key: "+eventKey);
+        return toReturn;
+    }
 
     /**
      * Mirror of: /event/{event_key}/oprs
@@ -154,6 +184,7 @@ public class EventRequest extends Parser {
     public EventOPR[] getOprs(String eventKey) {
         EventOPR[] oprs = parseOPRs(IO.doRequest("event/"+eventKey+"/oprs"));
         if(oprs == null) throw new DataNotFoundException("No oprs found for event with key: "+eventKey);
+        TBA.sort(oprs);
         return oprs;
     }
 
@@ -181,9 +212,10 @@ public class EventRequest extends Parser {
      */
     public Match[] getMatches(String eventKey) {
         JSONArray matches = (JSONArray) IO.doRequest("event/"+eventKey+"/matches");
-        if(matches == null)  throw new DataNotFoundException("No matches found for event with key: "+eventKey);
+        if(matches == null) throw new DataNotFoundException("No matches found for event with key: "+eventKey);
         Match[] toGet = new Match[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseMatch(matches.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -196,9 +228,10 @@ public class EventRequest extends Parser {
      */
     public SMatch[] getSMatches(String eventKey) {
         JSONArray matches = (JSONArray) IO.doRequest("event/"+eventKey+"/matches/simple");
-        if(matches == null)  throw new DataNotFoundException("No simple matches found for event with key: "+eventKey);
+        if(matches == null) throw new DataNotFoundException("No simple matches found for event with key: "+eventKey);
         SMatch[] toGet = new SMatch[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseSMatch(matches.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -242,6 +275,7 @@ public class EventRequest extends Parser {
         JSONArray rankings = (JSONArray) ranking.get("rankings");
         EventRanking[] toGet = new EventRanking[rankings.size()];
         for(int i = 0; i < rankings.size(); i++) toGet[i] = parseEventRanking(rankings.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 

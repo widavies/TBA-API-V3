@@ -1,4 +1,4 @@
-package com.cpjd.models.other.matches;
+package com.cpjd.models.matches;
 
 import lombok.Data;
 

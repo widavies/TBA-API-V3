@@ -1,15 +1,15 @@
 package com.cpjd.requests;
 
-import com.cpjd.models.other.Award;
-import com.cpjd.models.other.Media;
-import com.cpjd.models.other.District;
-import com.cpjd.models.other.teams.Robot;
-import com.cpjd.models.simple.SEvent;
-import com.cpjd.models.simple.SMatch;
-import com.cpjd.models.simple.STeam;
-import com.cpjd.models.standard.Event;
-import com.cpjd.models.standard.Match;
-import com.cpjd.models.standard.Team;
+import com.cpjd.main.TBA;
+import com.cpjd.models.events.Award;
+import com.cpjd.models.events.Media;
+import com.cpjd.models.teams.Robot;
+import com.cpjd.models.events.SEvent;
+import com.cpjd.models.matches.SMatch;
+import com.cpjd.models.teams.STeam;
+import com.cpjd.models.events.Event;
+import com.cpjd.models.matches.Match;
+import com.cpjd.models.teams.Team;
 import org.json.simple.JSONArray;
 import com.cpjd.utils.IO;
 import com.cpjd.utils.Parser;
@@ -40,6 +40,7 @@ public class TeamRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("No teams were found with pageNum: "+pageNum);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -55,6 +56,7 @@ public class TeamRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("No simple teams were found with pageNum: "+pageNum);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseSTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -84,6 +86,7 @@ public class TeamRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("No teams were found with pageNum: "+pageNum+", year: "+year);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -100,6 +103,7 @@ public class TeamRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("No simple teams were found with pageNum: "+pageNum+", year: "+year);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < toGet.length; i++) toGet[i] = parseSTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -183,6 +187,7 @@ public class TeamRequest extends Parser {
     public Robot[] getRobots(int number) {
         Robot[] robots = parseRobots(IO.doRequest("team/frc"+number+"/robots"));
         if(robots == null) throw new DataNotFoundException("Couldn't robots for team with number: "+number);
+        TBA.sort(robots);
         return robots;
     }
 
@@ -200,6 +205,7 @@ public class TeamRequest extends Parser {
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseEvent(events.get(i));
         }
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -217,6 +223,7 @@ public class TeamRequest extends Parser {
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseSEvent(events.get(i));
         }
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -248,6 +255,7 @@ public class TeamRequest extends Parser {
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseEvent(events.get(i));
         }
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -266,6 +274,7 @@ public class TeamRequest extends Parser {
         for(int i = 0; i < events.size(); i++) {
             toGet[i] = parseSEvent(events.get(i));
         }
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -298,6 +307,7 @@ public class TeamRequest extends Parser {
         for(int i = 0; i < matches.size(); i++) {
             toGet[i] = parseMatch(matches.get(i));
         }
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -316,6 +326,7 @@ public class TeamRequest extends Parser {
         for(int i = 0; i < matches.size(); i++) {
             toGet[i] = parseSMatch(matches.get(i));
         }
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -393,6 +404,7 @@ public class TeamRequest extends Parser {
         if(matches == null)  throw new DataNotFoundException("Couldn't find any matches for team with number: "+number+", year: "+year);
         Match[] toGet = new Match[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseMatch(matches.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -409,6 +421,7 @@ public class TeamRequest extends Parser {
         if(matches == null) throw new DataNotFoundException("Couldn't find any simple matches for team with number: "+number+", year: "+year);
         SMatch[] toGet = new SMatch[matches.size()];
         for(int i = 0; i < matches.size(); i++) toGet[i] = parseSMatch(matches.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 

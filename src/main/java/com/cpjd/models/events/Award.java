@@ -1,4 +1,4 @@
-package com.cpjd.models.other;
+package com.cpjd.models.events;
 
 import lombok.Data;
 
@@ -15,7 +15,7 @@ public class Award implements Serializable{
      */
     private String name;
     /**
-     * Type of award given. See https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/award_type.py#L6
+     * SortingType of award given. See https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/award_type.py#L6
      */
     private long awardType;
     /**

@@ -1,5 +1,7 @@
-package com.cpjd.models.simple;
+package com.cpjd.models.teams;
 
+import com.cpjd.sorting.Sortable;
+import com.cpjd.sorting.SortingType;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +13,7 @@ import java.io.Serializable;
  * @author Will Davies
  */
 @Data
-public class STeam implements Serializable {
+public class STeam extends Sortable<STeam> implements Serializable {
     /**
      * TBA team key with the format frcXXXX with XXXX representing the team number.
      */
@@ -41,4 +43,12 @@ public class STeam implements Serializable {
      */
     private String country;
 
+    @Override
+    public int sort(SortingType type, boolean ascending, STeam t2) {
+        if(type == SortingType.DEFAULT || type == SortingType.NUMBER) {
+            return Long.compare(teamNumber, t2.getTeamNumber());
+        }
+
+        throw new RuntimeException("Unsupported sort type for team model.");
+    }
 }

@@ -1,8 +1,7 @@
-package com.cpjd.models.standard;
+package com.cpjd.models.teams;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.cpjd.models.simple.STeam;
 
 /**
  * The standard team model

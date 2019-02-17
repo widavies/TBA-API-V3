@@ -1,10 +1,11 @@
 package com.cpjd.requests;
 
-import com.cpjd.models.other.District;
-import com.cpjd.models.simple.SEvent;
-import com.cpjd.models.simple.STeam;
-import com.cpjd.models.standard.Event;
-import com.cpjd.models.standard.Team;
+import com.cpjd.main.TBA;
+import com.cpjd.models.districts.District;
+import com.cpjd.models.events.SEvent;
+import com.cpjd.models.teams.STeam;
+import com.cpjd.models.events.Event;
+import com.cpjd.models.teams.Team;
 import org.json.simple.JSONArray;
 import com.cpjd.utils.IO;
 import com.cpjd.utils.Parser;
@@ -34,6 +35,7 @@ public class DistrictRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("Couldn't find any teams in district with key: "+districtKey);
         Team[] toGet = new Team[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -48,6 +50,7 @@ public class DistrictRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("Couldn't find any simple teams in district with key: "+districtKey);
         STeam[] toGet = new STeam[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseSTeam(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -75,6 +78,7 @@ public class DistrictRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("Couldn't find any events in district with key: "+districtKey);
         Event[] toGet = new Event[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseEvent(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -89,6 +93,7 @@ public class DistrictRequest extends Parser {
         if(teams == null) throw new DataNotFoundException("Couldn't find any simple events in district with key: "+districtKey);
         SEvent[] toGet = new SEvent[teams.size()];
         for(int i = 0; i < teams.size(); i++) toGet[i] = parseSEvent(teams.get(i));
+        TBA.sort(toGet);
         return toGet;
     }
 
@@ -117,6 +122,7 @@ public class DistrictRequest extends Parser {
         if(districts == null) throw new DataNotFoundException("Couldn't find any districts in year: "+year);
         District[] toReturn = new District[districts.size()];
         for(int i = 0; i < districts.size(); i++) toReturn[i] = parseDistrict(districts.get(i));
+        TBA.sort(toReturn);
         return toReturn;
     }
 

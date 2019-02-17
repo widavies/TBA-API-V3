@@ -29,7 +29,7 @@ public class IO {
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "TBA-API-V3");
             connection.setRequestProperty("X-TBA-Auth-Key", Constants.AUTH_TOKEN);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-SortingType", "application/x-www-form-urlencoded");
             connection.setRequestProperty("charset", "utf-8");
             connection.setUseCaches(false);
 

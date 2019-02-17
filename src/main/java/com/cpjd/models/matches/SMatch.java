@@ -1,17 +1,18 @@
-package com.cpjd.models.simple;
+package com.cpjd.models.matches;
 
+import com.cpjd.sorting.Sortable;
+import com.cpjd.sorting.SortingType;
 import lombok.Data;
-import com.cpjd.models.other.matches.MatchAlliance;
-import com.cpjd.models.standard.Match;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * @since 1.0.0
  * @author Will Davies
  */
 @Data
-public class SMatch implements Serializable, Comparable<SMatch> {
+public class SMatch extends Sortable<SMatch> implements Serializable {
     /**
      * TBA event key with the format yyyy[EVENT_CODE]_[COMP_LEVEL]m[MATCH_NUMBER], where yyyy is the year, and EVENT_CODE is the event code of the event, COMP_LEVEL is (qm, ef, qf, sf, f), and MATCH_NUMBER is the match number in the competition level. A set number may append the competition level if more than one match in required per set.
      *
@@ -59,28 +60,32 @@ public class SMatch implements Serializable, Comparable<SMatch> {
      */
     private long actualTime;
 
-    /**
-     * Sorts matches by:
-     * -Quals
-     * -Quarters
-     * -Semis
-     * -Finals
-     */
-
     @Override
-    public int compareTo(SMatch o) {
-        long localScore = matchNumber;
-        if(compLevel.equals("qf")) localScore += 1000;
-        else if(compLevel.equals("sf")) localScore += 10000;
-        else if(compLevel.equals("f")) localScore += 100000;
-        localScore += matchNumber;
+    public int sort(SortingType type, boolean ascending, SMatch t2) {
+        if(type == SortingType.DEFAULT || type == SortingType.NUMBER) {
+            /*
+             * Sorts matches by:
+             * -Quals
+             * -Quarters
+             * -Semis
+             * -Finals
+             */
+            String comp1 = compLevel;
+            String comp2 = t2.getCompLevel();
 
-        long compareScore = o.getMatchNumber();
-        if(o.getCompLevel().equals("qf")) compareScore += 1000;
-        else if(o.getCompLevel().equals("sf")) compareScore += 10000;
-        else if(o.getCompLevel().equals("f")) compareScore += 100000;
-        compareScore += o.getMatchNumber();
+            HashMap<String, Integer> map = new HashMap<>();
+            map.put("qm", 1);
+            map.put("ef", 2);
+            map.put("qf", 3);
+            map.put("sf", 4);
+            map.put("f", 5);
 
-        return Long.compare(localScore, compareScore);
+            if(comp1.equals(comp2)) return Long.compare(matchNumber, t2.getMatchNumber());
+            else return Integer.compare(map.get(comp1), map.get(comp2));
+        } else if(type == SortingType.DATE) {
+            return Long.compare(time, t2.getTime());
+        }
+
+        throw new RuntimeException("Unsupported sorting type for match model.");
     }
 }

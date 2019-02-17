@@ -1,6 +1,6 @@
 package com.cpjd.requests;
 
-import com.cpjd.models.other.APIStatus;
+import com.cpjd.models.APIStatus;
 import com.cpjd.utils.IO;
 import com.cpjd.utils.Parser;
 import com.cpjd.utils.exceptions.DataNotFoundException;
@@ -16,7 +16,6 @@ public class OtherRequest extends Parser {
      * @return APIStatus representing the state of the TBA API interface
      */
     public APIStatus getStatus() {
-
         APIStatus status = parseStatus(IO.doRequest("status"));
         if (status == null) throw new DataNotFoundException("Unable to fetch API status.");
         return status;

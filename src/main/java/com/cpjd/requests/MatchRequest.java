@@ -1,7 +1,7 @@
 package com.cpjd.requests;
 
-import com.cpjd.models.simple.SMatch;
-import com.cpjd.models.standard.Match;
+import com.cpjd.models.matches.SMatch;
+import com.cpjd.models.matches.Match;
 import com.cpjd.utils.IO;
 import com.cpjd.utils.Parser;
 import com.cpjd.utils.exceptions.DataNotFoundException;

@@ -1,16 +1,23 @@
 package com.cpjd.main;
 
-import com.cpjd.models.other.*;
-import com.cpjd.models.other.events.EventOPR;
-import com.cpjd.models.other.teams.Robot;
+import com.cpjd.models.APIStatus;
+import com.cpjd.models.districts.District;
+import com.cpjd.models.events.*;
+import com.cpjd.models.teams.Robot;
 
-import com.cpjd.models.simple.SEvent;
-import com.cpjd.models.simple.SMatch;
-import com.cpjd.models.simple.STeam;
-import com.cpjd.models.standard.Event;
-import com.cpjd.models.standard.Match;
-import com.cpjd.models.standard.Team;
+import com.cpjd.models.matches.SMatch;
+import com.cpjd.models.teams.STeam;
+import com.cpjd.models.matches.Match;
+import com.cpjd.models.teams.Team;
 import com.cpjd.requests.*;
+import com.cpjd.sorting.Sortable;
+import com.cpjd.sorting.SortingType;
+import com.cpjd.utils.IO;
+import com.cpjd.utils.exceptions.DataNotFoundException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.util.Arrays;
 
 /**
  * This is the com.cpjd.main interface for the API, let's talk about that.
@@ -50,6 +57,22 @@ public class TBA {
      */
     public static void setAuthToken(String authToken) {
         Constants.AUTH_TOKEN = authToken;
+    }
+
+    /*
+     * Sorting functions
+     */
+
+    public static <T extends Sortable> void sort(T[] array, SortingType type, boolean ascending) {
+        Arrays.sort(array, (o1, o2) -> ascending ? o1.sort(type, ascending, o2) : o2.sort(type, ascending, o1));
+    }
+
+    public static <T extends Sortable> void sort(T[] array) {
+        sort(array, SortingType.DEFAULT, true);
+    }
+
+    public static <T extends Sortable> void sort(T[] array, SortingType type) {
+        sort(array, type, true);
     }
 
     /**
@@ -661,5 +684,25 @@ public class TBA {
      */
     public Media[] getTeamSocialMedia(int number) {
         return tr.getTeamSocialMedia(number);
+    }
+
+    /**
+     * Mirror of: /event/{event_key}/alliances
+     *
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return List of all alliances in this event
+     */
+    public Alliance[] getEventAlliances(String eventKey) {
+        return er.getEventAlliances(eventKey);
+    }
+
+    /**
+     * Mirror of: /event/{event_key}/insights
+     *
+     * @param eventKey TBA Event Key, eg 2016nytr
+     * @return Insights for this event
+     */
+    public Insight getEventInsights(String eventKey) {
+        return er.getEventInsights(eventKey);
     }
 }

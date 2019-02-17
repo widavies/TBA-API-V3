@@ -1,8 +1,9 @@
-package com.cpjd.models.simple;
+package com.cpjd.models.events;
 
+import com.cpjd.sorting.Sortable;
+import com.cpjd.sorting.SortingType;
 import lombok.Data;
-import com.cpjd.models.other.District;
-import com.cpjd.models.standard.Event;
+import com.cpjd.models.districts.District;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -14,7 +15,7 @@ import java.util.Calendar;
  * @author Will Davies
  */
 @Data
-public class SEvent implements Serializable, Comparable<Event> {
+public class SEvent extends Sortable<SEvent> implements Serializable {
     /**
      * TBA event key with the format yyyy[EVENT_CODE], where yyyy is the year, and EVENT_CODE is the event code of the event.
      */
@@ -28,7 +29,7 @@ public class SEvent implements Serializable, Comparable<Event> {
      */
     private String eventCode;
     /**
-     * Event Type, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/event_type.py#L2
+     * Event SortingType, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/event_type.py#L2
      */
     private long eventType;
 
@@ -70,7 +71,13 @@ public class SEvent implements Serializable, Comparable<Event> {
     }
 
     @Override
-    public int compareTo(Event o) {
-        return Long.compare(getTimeInMillis(startDate), getTimeInMillis(o.getStartDate()));
+    public int sort(SortingType type, boolean ascending, SEvent t2) {
+        if(type == SortingType.DEFAULT || type == SortingType.DATE) {
+            return Long.compare(getTimeInMillis(startDate), getTimeInMillis(t2.getStartDate()));
+        } else if(type == SortingType.NAME) {
+            return name.compareTo(t2.getName());
+        }
+
+        throw new RuntimeException("Unsupported sorting type for event model type.");
     }
 }

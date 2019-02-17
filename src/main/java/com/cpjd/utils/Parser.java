@@ -1,17 +1,14 @@
 package com.cpjd.utils;
 
-import com.cpjd.models.ScoreBreakdown;
-import com.cpjd.models.other.*;
-import com.cpjd.models.other.events.EventOPR;
-import com.cpjd.models.other.events.Webcast;
-import com.cpjd.models.other.matches.MatchAlliance;
-import com.cpjd.models.other.teams.Robot;
-import com.cpjd.models.simple.SEvent;
-import com.cpjd.models.simple.SMatch;
-import com.cpjd.models.simple.STeam;
-import com.cpjd.models.standard.Event;
-import com.cpjd.models.standard.Match;
-import com.cpjd.models.standard.Team;
+import com.cpjd.models.APIStatus;
+import com.cpjd.models.districts.District;
+import com.cpjd.models.events.*;
+import com.cpjd.models.matches.MatchAlliance;
+import com.cpjd.models.teams.Robot;
+import com.cpjd.models.matches.SMatch;
+import com.cpjd.models.teams.STeam;
+import com.cpjd.models.matches.Match;
+import com.cpjd.models.teams.Team;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -29,6 +26,8 @@ public class Parser {
     protected APIStatus parseStatus(Object object) {
         APIStatus status = new APIStatus();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         status.setCurrentSeason((long)hash.get("current_season"));
         status.setMaxSeason((long)hash.get("max_season"));
         status.setDatafeedDown((boolean)hash.get("is_datafeed_down"));
@@ -44,6 +43,8 @@ public class Parser {
     protected Team parseTeam(Object object) {
         Team team = new Team();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         team.setKey((String)hash.get("key"));
         team.setTeamNumber((long)hash.get("team_number"));
         team.setNickname((String)hash.get("nickname"));
@@ -67,6 +68,8 @@ public class Parser {
     protected STeam parseSTeam(Object object) {
         STeam team = new STeam();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         team.setKey((String)hash.get("key"));
         team.setTeamNumber((long)hash.get("team_number"));
         team.setNickname((String)hash.get("nickname"));
@@ -81,6 +84,7 @@ public class Parser {
         HashMap hash = (HashMap) object;
         District d = new District();
         if(hash == null) return null;
+
         d.setAbbreviation((String)hash.get("abbreviation"));
         d.setDisplayName((String)hash.get("display_name"));
         d.setKey((String)hash.get("key"));
@@ -106,16 +110,19 @@ public class Parser {
     protected Event parseEvent(Object object) {
         Event e = new Event();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         e.setKey((String)hash.get("key"));
         e.setName((String)hash.get("name"));
         e.setEventCode((String)hash.get("event_code"));
         e.setEventType(Utils.cleanLong(hash.get("event_type")));
-        e.setCity((String)hash.get("city"));
         e.setStateProv((String)hash.get("state_prov"));
         e.setCountry((String)hash.get("country"));
         e.setStartDate((String)hash.get("start_date"));
         e.setEndDate((String)hash.get("end_Date"));
         e.setYear(Utils.cleanLong(hash.get("year")));
+        e.setDistrict(parseDistrict(hash.get("district")));
+        e.setCity((String)hash.get("city"));
         e.setShortName((String)hash.get("short_name"));
         e.setEventTypeString((String)hash.get("event_type_string"));
         e.setWeek(Utils.cleanLong(hash.get("week")));
@@ -132,7 +139,6 @@ public class Parser {
         e.setParentEventkey((String)hash.get("parent_event_key"));
         e.setPlayoffType(Utils.cleanLong(hash.get("playoff_type")));
         e.setPlayoffTypeString((String)hash.get("playoff_type_string"));
-        e.setDistrict(parseDistrict(hash.get("district")));
         JSONArray keys = (JSONArray) hash.get("division_keys");
         e.setDivisonKeys(Utils.jsonArrayToStringArray(keys));
         JSONArray webcasts = (JSONArray) hash.get("webcasts");
@@ -152,6 +158,8 @@ public class Parser {
     protected SEvent parseSEvent(Object object) {
         SEvent e = new SEvent();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         e.setKey((String)hash.get("key"));
         e.setName((String)hash.get("name"));
         e.setEventCode((String)hash.get("event_code"));
@@ -168,6 +176,8 @@ public class Parser {
     protected Media parseMedia(Object object) {
         Media media = new Media();
         HashMap hash = (HashMap)object;
+        if(hash == null) return null;
+
         media.setKey((String)hash.get("key"));
         media.setType((String)hash.get("type"));
         media.setForeignKey((String)hash.get("foreign_key"));
@@ -179,6 +189,8 @@ public class Parser {
     protected Match parseMatch(Object object) {
         Match m = new Match();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         m.setKey((String)hash.get("key"));
         m.setCompLevel((String)hash.get("comp_level"));
         m.setSetNumber(Utils.cleanLong(hash.get("set_number")));
@@ -191,14 +203,8 @@ public class Parser {
         m.setPostResultTime(Utils.cleanLong(hash.get("post_result_time")));
         try {
             JSONObject obj = (JSONObject)hash.get("score_breakdown");
-            ScoreBreakdown red = new ScoreBreakdown();
-            red.setRed(true);
-            red.setValues(new HashMap<String, Object>((JSONObject)obj.get("red")));
-            m.setRedScoreBreakdown(red);
-            ScoreBreakdown blue = new ScoreBreakdown();
-            blue.setRed(false);
-            blue.setValues(new HashMap<String, Object>((JSONObject)obj.get("blue")));
-            m.setBlueScoreBreakdown(blue);
+            m.setRedScoreBreakdown(new HashMap<String, Object>((JSONObject)obj.get("red")));
+            m.setBlueScoreBreakdown(new HashMap<String, Object>((JSONObject)obj.get("blue")));
         } catch(Exception e) {}
 
        // m.setScoreBreakdown((String)hash.get("score_breakdown"));
@@ -228,9 +234,46 @@ public class Parser {
         return m;
     }
 
+    protected Alliance parseEventAlliance(Object object) {
+        Alliance alliance = new Alliance();
+        HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
+        alliance.setName((String)hash.get("name"));
+        if(hash.get("backup") != null) alliance.setBackupOut((String)(((JSONObject) hash.get("backup")).get("out")));
+        if(hash.get("backup") != null) alliance.setBackupIn((String)(((JSONObject) hash.get("backup")).get("in")));
+        alliance.setDeclines(Utils.jsonArrayToStringArray((JSONArray)hash.get("declines")));
+        alliance.setPicks(Utils.jsonArrayToStringArray((JSONArray)hash.get("picks")));
+        alliance.setStatus((String) (((JSONObject) hash.get("status")).get("status")));
+        alliance.setCurrentLevelRecord_Wins(Utils.cleanLong(((JSONObject)(((JSONObject)hash.get("status")).get("current_level_record"))).get("wins")));
+        alliance.setCurrentLevelRecord_Losses(Utils.cleanLong(((JSONObject)(((JSONObject)hash.get("status")).get("current_level_record"))).get("losses")));
+        alliance.setCurrentLevelRecord_Ties(Utils.cleanLong(((JSONObject)(((JSONObject)hash.get("status")).get("current_level_record"))).get("ties")));
+        alliance.setLevel((String) (((JSONObject) hash.get("status")).get("level")));
+        alliance.setPlayoffAverage(Utils.cleanDouble(((JSONObject) hash.get("status")).get("playoff_average")));
+        alliance.setRecordWins(Utils.cleanLong(((JSONObject)(((JSONObject)hash.get("status")).get("record"))).get("wins")));
+        alliance.setRecordLosses(Utils.cleanLong(((JSONObject)(((JSONObject)hash.get("status")).get("record"))).get("losses")));
+        alliance.setRecordTies(Utils.cleanLong(((JSONObject)(((JSONObject)hash.get("status")).get("record"))).get("ties")));
+
+        return alliance;
+    }
+
+    protected Insight parseInsight(Object object) {
+        Insight insight = new Insight();
+
+        HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
+        insight.setQual(new HashMap<String, Object>((JSONObject)hash.get("qual")));
+        insight.setPlayoff(new HashMap<String, Object>((JSONObject)hash.get("playoff")));
+
+        return insight;
+    }
+
     protected EventRanking parseEventRanking(Object object) {
         EventRanking ranking = new EventRanking();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         ranking.setMatchesPlayed(Utils.cleanLong(hash.get("matches_played")));
         ranking.setQualAverage(Utils.cleanLong(hash.get("qual_average")));
         ranking.setRank(Utils.cleanLong(hash.get("rank")));
@@ -247,6 +290,8 @@ public class Parser {
     protected SMatch parseSMatch(Object object) {
         SMatch m = new SMatch();
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         m.setKey((String)hash.get("key"));
         m.setCompLevel((String)hash.get("comp_level"));
         m.setSetNumber(Utils.cleanLong(hash.get("set_number")));
@@ -281,6 +326,8 @@ public class Parser {
     protected Award parseAward(Object object) {
         Award a = new Award();
         HashMap hash = (HashMap)object;
+        if(hash == null) return null;
+
         a.setName((String)hash.get("name"));
         a.setAwardType(Utils.cleanLong(hash.get("award_type")));
         a.setEventKey((String)hash.get("event_key"));
@@ -300,6 +347,8 @@ public class Parser {
 
     protected EventOPR[] parseOPRs(Object object) {
         HashMap hash = (HashMap) object;
+        if(hash == null) return null;
+
         JSONObject oprs = (JSONObject) hash.get("oprs");
         JSONObject dprs = (JSONObject) hash.get("dprs");
         JSONObject ccwms = (JSONObject) hash.get("ccwms");
@@ -312,7 +361,6 @@ public class Parser {
             opr.setTeamKey((String)oprs.keySet().toArray()[i]);
             toReturn[i] = opr;
         }
-
         return toReturn;
     }
 }
