@@ -1,14 +1,11 @@
 package com.cpjd.models.events;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
  * @since 1.0.0
  * @author Will Davies
  */
-@Data
 public class Award implements Serializable{
     /**
      * The name of the award as provided by FIRST. May vary for the same award type.
@@ -30,4 +27,44 @@ public class Award implements Serializable{
      * The year this award was won.
      */
     private long year;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getAwardType() {
+        return awardType;
+    }
+
+    public void setAwardType(long awardType) {
+        this.awardType = awardType;
+    }
+
+    public String getEventKey() {
+        return eventKey;
+    }
+
+    public void setEventKey(String eventKey) {
+        this.eventKey = eventKey;
+    }
+
+    public AwardRecipient[] getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(AwardRecipient[] recipients) {
+        this.recipients = recipients;
+    }
+
+    public long getYear() {
+        return year;
+    }
+
+    public void setYear(long year) {
+        this.year = year;
+    }
 }

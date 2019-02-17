@@ -2,7 +2,6 @@ package com.cpjd.models.matches;
 
 import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
-import lombok.Data;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.HashMap;
  * @since 1.0.0
  * @author Will Davies
  */
-@Data
 public class SMatch extends Sortable<SMatch> implements Serializable {
     /**
      * TBA event key with the format yyyy[EVENT_CODE]_[COMP_LEVEL]m[MATCH_NUMBER], where yyyy is the year, and EVENT_CODE is the event code of the event, COMP_LEVEL is (qm, ef, qf, sf, f), and MATCH_NUMBER is the match number in the competition level. A set number may append the competition level if more than one match in required per set.
@@ -87,5 +85,93 @@ public class SMatch extends Sortable<SMatch> implements Serializable {
         }
 
         throw new RuntimeException("Unsupported sorting type for match model.");
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getCompLevel() {
+        return compLevel;
+    }
+
+    public void setCompLevel(String compLevel) {
+        this.compLevel = compLevel;
+    }
+
+    public long getSetNumber() {
+        return setNumber;
+    }
+
+    public void setSetNumber(long setNumber) {
+        this.setNumber = setNumber;
+    }
+
+    public long getMatchNumber() {
+        return matchNumber;
+    }
+
+    public void setMatchNumber(long matchNumber) {
+        this.matchNumber = matchNumber;
+    }
+
+    public MatchAlliance getBlue() {
+        return blue;
+    }
+
+    public void setBlue(MatchAlliance blue) {
+        this.blue = blue;
+    }
+
+    public MatchAlliance getRed() {
+        return red;
+    }
+
+    public void setRed(MatchAlliance red) {
+        this.red = red;
+    }
+
+    public String getWinningAlliance() {
+        return winningAlliance;
+    }
+
+    public void setWinningAlliance(String winningAlliance) {
+        this.winningAlliance = winningAlliance;
+    }
+
+    public String getEventKey() {
+        return eventKey;
+    }
+
+    public void setEventKey(String eventKey) {
+        this.eventKey = eventKey;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public long getPredictedTime() {
+        return predictedTime;
+    }
+
+    public void setPredictedTime(long predictedTime) {
+        this.predictedTime = predictedTime;
+    }
+
+    public long getActualTime() {
+        return actualTime;
+    }
+
+    public void setActualTime(long actualTime) {
+        this.actualTime = actualTime;
     }
 }

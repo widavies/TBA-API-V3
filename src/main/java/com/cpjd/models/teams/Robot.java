@@ -2,11 +2,9 @@ package com.cpjd.models.teams;
 
 import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
-import lombok.Data;
 
 import java.io.Serializable;
 
-@Data
 public class Robot extends Sortable<Robot> implements Serializable {
     /**
      * Year this robot competed in.
@@ -32,5 +30,37 @@ public class Robot extends Sortable<Robot> implements Serializable {
         }
 
         throw new RuntimeException("Unsupported sort type for model robot.");
+    }
+
+    public long getYear() {
+        return year;
+    }
+
+    public void setYear(long year) {
+        this.year = year;
+    }
+
+    public String getRobotName() {
+        return robotName;
+    }
+
+    public void setRobotName(String robotName) {
+        this.robotName = robotName;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getTeamKey() {
+        return teamKey;
+    }
+
+    public void setTeamKey(String teamKey) {
+        this.teamKey = teamKey;
     }
 }

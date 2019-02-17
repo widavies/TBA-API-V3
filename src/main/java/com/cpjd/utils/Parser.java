@@ -207,7 +207,6 @@ public class Parser {
             m.setBlueScoreBreakdown(new HashMap<String, Object>((JSONObject)obj.get("blue")));
         } catch(Exception e) {}
 
-       // m.setScoreBreakdown((String)hash.get("score_breakdown"));
         JSONObject allies = (JSONObject) hash.get("alliances");
         if(allies != null) {
             JSONObject blue = (JSONObject) allies.get("blue");

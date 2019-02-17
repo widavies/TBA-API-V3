@@ -2,14 +2,12 @@ package com.cpjd.models.events;
 
 import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
-import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * Created by Will Davies on 7/7/2017.
  */
-@Data
 public class EventRanking extends Sortable<EventRanking> implements Serializable {
     /**
      * The team with this rank.
@@ -36,6 +34,86 @@ public class EventRanking extends Sortable<EventRanking> implements Serializable
         }
 
         throw new RuntimeException("Unsupported sort type for model EventRanking.");
+    }
+
+    public String getTeamKey() {
+        return teamKey;
+    }
+
+    public void setTeamKey(String teamKey) {
+        this.teamKey = teamKey;
+    }
+
+    public long getDq() {
+        return dq;
+    }
+
+    public void setDq(long dq) {
+        this.dq = dq;
+    }
+
+    public long[] getExtraStats() {
+        return extraStats;
+    }
+
+    public void setExtraStats(long[] extraStats) {
+        this.extraStats = extraStats;
+    }
+
+    public long getQualAverage() {
+        return qualAverage;
+    }
+
+    public void setQualAverage(long qualAverage) {
+        this.qualAverage = qualAverage;
+    }
+
+    public long getMatchesPlayed() {
+        return matchesPlayed;
+    }
+
+    public void setMatchesPlayed(long matchesPlayed) {
+        this.matchesPlayed = matchesPlayed;
+    }
+
+    public double[] getSortOrders() {
+        return sortOrders;
+    }
+
+    public void setSortOrders(double[] sortOrders) {
+        this.sortOrders = sortOrders;
+    }
+
+    public long getWins() {
+        return wins;
+    }
+
+    public void setWins(long wins) {
+        this.wins = wins;
+    }
+
+    public long getTies() {
+        return ties;
+    }
+
+    public void setTies(long ties) {
+        this.ties = ties;
+    }
+
+    public long getLosses() {
+        return losses;
+    }
+
+    public void setLosses(long losses) {
+        this.losses = losses;
+    }
+
+    public long getRank() {
+        return rank;
+    }
+
+    public void setRank(long rank) {
+        this.rank = rank;
     }
 }
 

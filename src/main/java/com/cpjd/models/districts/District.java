@@ -2,7 +2,6 @@ package com.cpjd.models.districts;
 
 import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
-import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,7 +9,6 @@ import java.io.Serializable;
  * @since 1.0.0
  * @author Will Davies
  */
-@Data
 public class District extends Sortable<District> implements Serializable {
     /**
      * The short identifier for the district.
@@ -38,5 +36,37 @@ public class District extends Sortable<District> implements Serializable {
         }
 
         throw new RuntimeException("Unsupported sort type for model District.");
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public long getYear() {
+        return year;
+    }
+
+    public void setYear(long year) {
+        this.year = year;
     }
 }

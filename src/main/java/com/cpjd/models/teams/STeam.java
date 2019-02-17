@@ -2,7 +2,6 @@ package com.cpjd.models.teams;
 
 import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
-import lombok.Data;
 
 import java.io.Serializable;
 
@@ -12,7 +11,6 @@ import java.io.Serializable;
  * @since 1.0.0
  * @author Will Davies
  */
-@Data
 public class STeam extends Sortable<STeam> implements Serializable {
     /**
      * TBA team key with the format frcXXXX with XXXX representing the team number.
@@ -50,5 +48,61 @@ public class STeam extends Sortable<STeam> implements Serializable {
         }
 
         throw new RuntimeException("Unsupported sort type for team model.");
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public long getTeamNumber() {
+        return teamNumber;
+    }
+
+    public void setTeamNumber(long teamNumber) {
+        this.teamNumber = teamNumber;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStateProv() {
+        return stateProv;
+    }
+
+    public void setStateProv(String stateProv) {
+        this.stateProv = stateProv;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

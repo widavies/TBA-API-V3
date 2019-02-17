@@ -3,7 +3,6 @@ package com.cpjd.main;
 import com.cpjd.models.APIStatus;
 import com.cpjd.models.districts.District;
 import com.cpjd.models.events.*;
-import lombok.Data;
 import com.cpjd.models.teams.Robot;
 import com.cpjd.models.matches.SMatch;
 import com.cpjd.models.teams.STeam;
@@ -19,7 +18,6 @@ import com.cpjd.requests.*;
  * @author Will Davies
  */
 @SuppressWarnings("unused")
-@Data
 public class CTBA {
 
     /**
@@ -624,5 +622,93 @@ public class CTBA {
      */
     public Insight getEventInsights() {
         return er.getEventInsights(eventKey);
+    }
+
+    public void setDistrictKey(String districtKey) {
+        this.districtKey = districtKey;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public void setEventKey(String eventKey) {
+        this.eventKey = eventKey;
+    }
+
+    public void setMatchKey(String matchKey) {
+        this.matchKey = matchKey;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setDr(DistrictRequest dr) {
+        this.dr = dr;
+    }
+
+    public void setEr(EventRequest er) {
+        this.er = er;
+    }
+
+    public void setMr(MatchRequest mr) {
+        this.mr = mr;
+    }
+
+    public void setOr(OtherRequest or) {
+        this.or = or;
+    }
+
+    public void setTr(TeamRequest tr) {
+        this.tr = tr;
+    }
+
+    public String getDistrictKey() {
+        return districtKey;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public String getEventKey() {
+        return eventKey;
+    }
+
+    public String getMatchKey() {
+        return matchKey;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public DistrictRequest getDr() {
+        return dr;
+    }
+
+    public EventRequest getEr() {
+        return er;
+    }
+
+    public MatchRequest getMr() {
+        return mr;
+    }
+
+    public OtherRequest getOr() {
+        return or;
+    }
+
+    public TeamRequest getTr() {
+        return tr;
     }
 }

@@ -1,7 +1,5 @@
 package com.cpjd.models.matches;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import com.cpjd.models.events.Media;
 
 import java.util.HashMap;
@@ -11,8 +9,6 @@ import java.util.HashMap;
  * @author Will Davies
  */
 
-@EqualsAndHashCode(callSuper = false)
-@Data
 public class Match extends SMatch {
     /**
      * UNIX timestamp (seconds since 1-Jan-1970 00:00:00) when the match result was posted.
@@ -32,4 +28,35 @@ public class Match extends SMatch {
      */
     private Media[] videos;
 
+    public long getPostResultTime() {
+        return postResultTime;
+    }
+
+    public void setPostResultTime(long postResultTime) {
+        this.postResultTime = postResultTime;
+    }
+
+    public HashMap<String, Object> getRedScoreBreakdown() {
+        return redScoreBreakdown;
+    }
+
+    public void setRedScoreBreakdown(HashMap<String, Object> redScoreBreakdown) {
+        this.redScoreBreakdown = redScoreBreakdown;
+    }
+
+    public HashMap<String, Object> getBlueScoreBreakdown() {
+        return blueScoreBreakdown;
+    }
+
+    public void setBlueScoreBreakdown(HashMap<String, Object> blueScoreBreakdown) {
+        this.blueScoreBreakdown = blueScoreBreakdown;
+    }
+
+    public Media[] getVideos() {
+        return videos;
+    }
+
+    public void setVideos(Media[] videos) {
+        this.videos = videos;
+    }
 }

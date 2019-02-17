@@ -30,7 +30,5 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'com.github.fangyidong:json-simple:tag_release_1_1_1'
-    compile "org.projectlombok:lombok:1.18.0"
-    compile 'javax.annotation:jsr250-api:1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
