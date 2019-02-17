@@ -1,12 +1,26 @@
 # TBA-API-V3
 A Java library for pulling robotics data from https://www.thebluealliance.com.
 
-I made this API because none of the other Java APIs were working for me. I hope that this will be the last place you have to go for your TBA API needs. Thanks!
+This API uses the new TBA V3 API, for the V2, you can use the deprecated https://github.com/wdavies973/TBA-API-V2. 
 # Installation
 You'll need to create a TBA account and register a read API key
 here: https://www.thebluealliance.com/account.
 ## With JitPack
 Use [JitPack](https://jitpack.io) to install the library with Maven, Gradle, SBT, or Leiningen. Simply go to https://jitpack.io/#wdavies973/tba-api-v3, select your release, and add the provided lines to your buildfile.
+
+Gradle example:
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+dependencies {
+    implementation 'com.github.wdavies973:tba-api-v3:1.0.5'
+}
+ ```
 
 ## Manually
 Download the .jar file from https://github.com/wdavies973/TBA-API-V3/releases.
