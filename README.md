@@ -18,7 +18,7 @@ allprojects {
 	}
 
 dependencies {
-    implementation 'com.github.wdavies973:tba-api-v3:1.0.5'
+    implementation 'com.github.wdavies973:tba-api-v3:1.0.6'
 }
  ```
 
@@ -29,9 +29,9 @@ This API also requires json-simple. Download the .jar file at https://code.googl
 
 # Overview
 TBA-API-V3 is modeled exactly off of the API specifications described at https://www.thebluealliance.com/apidocs/v3. All API
-calls found on this page are implemented in Java (or will be soon). Models can be found in the ```models``` package, if a model
+calls found on this page are implemented in Java. Models can be found in the ```models``` package, if a model
 begins with a 'S', it represents a ```simple``` model as defined by the V3 API. To get started using the API, set the
-API read AUTH token with `Constants.AUTH = "<auth-token>"`. Create a ```TBA``` object for usage with no constructors (better if parameters
+API read AUTH token with `TBA.setAuthToken("<auth-token>")`. Create a ```TBA``` object for usage with no constructors (better if parameters
 will be changed frequently) and a ```CTBA``` object for usage with constructors (better if parameters won't be changed frequently).
 For more information, visit the wiki at https://www.github.com/wdavies973/TBA-API-V3/wiki.
 
@@ -50,12 +50,11 @@ StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitNet
 Make sure you make API calls in an ```AsyncTask```
 
 # Tutorial and Examples
-Find them at https://www.github.com/wdavies973/TBA-API-V3/wiki.  
-The API is designed to be easy to use and fairly idiot-proof (no offense, I wish everyone designed their software like that).
+Find them at https://www.github.com/wdavies973/TBA-API-V3/wiki.
 
-# Contribute
-There are about 5 API calls that haven't been implemented yet. JUnit tests and more would also be useful.
-I would greatly appreciate any help towards making this API a solid interface for the V3 API for the years to come.
+# Future
+I plan on supporting this project continually since it's used extensively in my scouting app over at https://www.roblu.net.
+Any contributions are welcome, including bug reports, feature requests, or code contributions.
 
 # Other
 Report any bugs or suggestions to wdavies973@gmail.com
