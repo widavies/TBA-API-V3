@@ -69,4 +69,15 @@ public class District extends Sortable<District> implements Serializable {
     public void setYear(long year) {
         this.year = year;
     }
+
+
+    @Override
+    public String toString() {
+        return "District{" +
+                "abbreviation='" + abbreviation + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", key='" + key + '\'' +
+                ", year=" + year +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package com.cpjd.models.matches;
 
 import com.cpjd.models.events.Media;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -58,5 +59,15 @@ public class Match extends SMatch {
 
     public void setVideos(Media[] videos) {
         this.videos = videos;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "postResultTime=" + postResultTime +
+                ", redScoreBreakdown=" + redScoreBreakdown +
+                ", blueScoreBreakdown=" + blueScoreBreakdown +
+                ", videos=" + Arrays.toString(videos) +
+                '}';
     }
 }

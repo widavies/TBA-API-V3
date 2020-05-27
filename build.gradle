@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven'
 }
-version '1.0.1'
+version '1.0.2'
 group "com.github.wdavies973"
 
 sourceCompatibility = 1.8

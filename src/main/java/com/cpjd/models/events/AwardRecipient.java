@@ -30,4 +30,12 @@ public class AwardRecipient implements Serializable {
     public void setAwardee(String awardee) {
         this.awardee = awardee;
     }
+
+    @Override
+    public String toString() {
+        return "AwardRecipient{" +
+                "teamKey='" + teamKey + '\'' +
+                ", awardee='" + awardee + '\'' +
+                '}';
+    }
 }

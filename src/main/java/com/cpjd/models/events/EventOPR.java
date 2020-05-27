@@ -68,4 +68,14 @@ public class EventOPR extends Sortable<EventOPR> implements Serializable {
     public void setCcwm(double ccwm) {
         this.ccwm = ccwm;
     }
+
+    @Override
+    public String toString() {
+        return "EventOPR{" +
+                "teamKey='" + teamKey + '\'' +
+                ", opr=" + opr +
+                ", dpr=" + dpr +
+                ", ccwm=" + ccwm +
+                '}';
+    }
 }

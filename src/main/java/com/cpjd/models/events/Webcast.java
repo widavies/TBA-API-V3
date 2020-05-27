@@ -34,4 +34,13 @@ public class Webcast implements Serializable {
     public void setFile(String file) {
         this.file = file;
     }
+
+    @Override
+    public String toString() {
+        return "Webcast{" +
+                "type='" + type + '\'' +
+                ", channel='" + channel + '\'' +
+                ", file='" + file + '\'' +
+                '}';
+    }
 }

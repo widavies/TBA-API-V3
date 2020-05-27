@@ -1,6 +1,7 @@
 package com.cpjd.models;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  *
@@ -91,5 +92,19 @@ public class APIStatus implements Serializable {
 
     public void setAndroidLatestAppVersion(long androidLatestAppVersion) {
         this.androidLatestAppVersion = androidLatestAppVersion;
+    }
+
+    @Override
+    public String toString() {
+        return "APIStatus{" +
+                "currentSeason=" + currentSeason +
+                ", maxSeason=" + maxSeason +
+                ", isDatafeedDown=" + isDatafeedDown +
+                ", downEvents=" + Arrays.toString(downEvents) +
+                ", iosMinAppVersion=" + iosMinAppVersion +
+                ", iosLatestAppVersion=" + iosLatestAppVersion +
+                ", androidMinAppVersion=" + androidMinAppVersion +
+                ", androidLatestAppVersion=" + androidLatestAppVersion +
+                '}';
     }
 }

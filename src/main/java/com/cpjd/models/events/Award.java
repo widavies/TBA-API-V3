@@ -1,6 +1,7 @@
 package com.cpjd.models.events;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @since 1.0.0
@@ -66,5 +67,16 @@ public class Award implements Serializable{
 
     public void setYear(long year) {
         this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return "Award{" +
+                "name='" + name + '\'' +
+                ", awardType=" + awardType +
+                ", eventKey='" + eventKey + '\'' +
+                ", recipients=" + Arrays.toString(recipients) +
+                ", year=" + year +
+                '}';
     }
 }

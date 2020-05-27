@@ -127,4 +127,20 @@ public class Team extends STeam {
     public void setMotto(String motto) {
         this.motto = motto;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "address='" + address + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", GMAPSPlaceID='" + GMAPSPlaceID + '\'' +
+                ", GMAPURL='" + GMAPURL + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", locationName='" + locationName + '\'' +
+                ", website='" + website + '\'' +
+                ", rookieYear=" + rookieYear +
+                ", motto='" + motto + '\'' +
+                '}';
+    }
 }

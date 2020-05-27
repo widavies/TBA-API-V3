@@ -158,4 +158,20 @@ public class SEvent extends Sortable<SEvent> implements Serializable {
     public void setYear(long year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return "SEvent{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", eventCode='" + eventCode + '\'' +
+                ", eventType=" + eventType +
+                ", district=" + district +
+                ", stateProv='" + stateProv + '\'' +
+                ", country='" + country + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", year=" + year +
+                '}';
+    }
 }

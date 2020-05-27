@@ -67,4 +67,15 @@ public class Media implements Serializable {
     public void setPreferred(boolean preferred) {
         this.preferred = preferred;
     }
+
+    @Override
+    public String toString() {
+        return "Media{" +
+                "key='" + key + '\'' +
+                ", type='" + type + '\'' +
+                ", foreignKey='" + foreignKey + '\'' +
+                ", details='" + details + '\'' +
+                ", preferred=" + preferred +
+                '}';
+    }
 }

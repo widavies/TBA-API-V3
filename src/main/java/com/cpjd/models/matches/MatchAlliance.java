@@ -1,6 +1,7 @@
 package com.cpjd.models.matches;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @since 1.0.0
@@ -42,5 +43,14 @@ public class MatchAlliance implements Serializable {
 
     public void setSurrogateTeamKeys(String[] surrogateTeamKeys) {
         this.surrogateTeamKeys = surrogateTeamKeys;
+    }
+
+    @Override
+    public String toString() {
+        return "MatchAlliance{" +
+                "score=" + score +
+                ", teamKeys=" + Arrays.toString(teamKeys) +
+                ", surrogateTeamKeys=" + Arrays.toString(surrogateTeamKeys) +
+                '}';
     }
 }

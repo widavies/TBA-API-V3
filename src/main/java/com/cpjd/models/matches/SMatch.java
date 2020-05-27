@@ -174,4 +174,21 @@ public class SMatch extends Sortable<SMatch> implements Serializable {
     public void setActualTime(long actualTime) {
         this.actualTime = actualTime;
     }
+
+    @Override
+    public String toString() {
+        return "SMatch{" +
+                "key='" + key + '\'' +
+                ", compLevel='" + compLevel + '\'' +
+                ", setNumber=" + setNumber +
+                ", matchNumber=" + matchNumber +
+                ", blue=" + blue +
+                ", red=" + red +
+                ", winningAlliance='" + winningAlliance + '\'' +
+                ", eventKey='" + eventKey + '\'' +
+                ", time=" + time +
+                ", predictedTime=" + predictedTime +
+                ", actualTime=" + actualTime +
+                '}';
+    }
 }

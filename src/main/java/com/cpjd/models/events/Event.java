@@ -1,5 +1,7 @@
 package com.cpjd.models.events;
 
+import java.util.Arrays;
+
 /**
  * Events represent FIRST Robotics Competition events, both official and unofficial.
  * key_name is like '2010ct'
@@ -243,5 +245,30 @@ public class Event extends SEvent {
 
     public void setWebcasts(Webcast[] webcasts) {
         this.webcasts = webcasts;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "shortName='" + shortName + '\'' +
+                ", eventTypeString='" + eventTypeString + '\'' +
+                ", website='" + website + '\'' +
+                ", firstEventID='" + firstEventID + '\'' +
+                ", parentEventkey='" + parentEventkey + '\'' +
+                ", playoffType=" + playoffType +
+                ", playoffTypeString='" + playoffTypeString + '\'' +
+                ", divisonKeys=" + Arrays.toString(divisonKeys) +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", GMAPSPlaceID='" + GMAPSPlaceID + '\'' +
+                ", GMAPSURL='" + GMAPSURL + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", locationName='" + locationName + '\'' +
+                ", week=" + week +
+                ", timezone='" + timezone + '\'' +
+                ", webcasts=" + Arrays.toString(webcasts) +
+                '}';
     }
 }

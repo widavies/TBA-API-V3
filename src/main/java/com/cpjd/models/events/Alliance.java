@@ -3,6 +3,8 @@ package com.cpjd.models.events;
 import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
 
+import java.util.Arrays;
+
 public class Alliance extends Sortable<Alliance> {
 
     private String name;
@@ -143,5 +145,25 @@ public class Alliance extends Sortable<Alliance> {
 
     public void setRecordTies(long recordTies) {
         this.recordTies = recordTies;
+    }
+
+    @Override
+    public String toString() {
+        return "Alliance{" +
+                "name='" + name + '\'' +
+                ", backupOut='" + backupOut + '\'' +
+                ", backupIn='" + backupIn + '\'' +
+                ", declines=" + Arrays.toString(declines) +
+                ", picks=" + Arrays.toString(picks) +
+                ", status='" + status + '\'' +
+                ", currentLevelRecord_Losses=" + currentLevelRecord_Losses +
+                ", currentLevelRecord_Wins=" + currentLevelRecord_Wins +
+                ", currentLevelRecord_Ties=" + currentLevelRecord_Ties +
+                ", level='" + level + '\'' +
+                ", playoffAverage=" + playoffAverage +
+                ", recordLosses=" + recordLosses +
+                ", recordWins=" + recordWins +
+                ", recordTies=" + recordTies +
+                '}';
     }
 }

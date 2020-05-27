@@ -105,4 +105,17 @@ public class STeam extends Sortable<STeam> implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return "STeam{" +
+                "key='" + key + '\'' +
+                ", teamNumber=" + teamNumber +
+                ", nickname='" + nickname + '\'' +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", stateProv='" + stateProv + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

@@ -63,4 +63,14 @@ public class Robot extends Sortable<Robot> implements Serializable {
     public void setTeamKey(String teamKey) {
         this.teamKey = teamKey;
     }
+
+    @Override
+    public String toString() {
+        return "Robot{" +
+                "year=" + year +
+                ", robotName='" + robotName + '\'' +
+                ", key='" + key + '\'' +
+                ", teamKey='" + teamKey + '\'' +
+                '}';
+    }
 }

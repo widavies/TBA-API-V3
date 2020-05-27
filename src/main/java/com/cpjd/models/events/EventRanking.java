@@ -4,6 +4,7 @@ import com.cpjd.sorting.Sortable;
 import com.cpjd.sorting.SortingType;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by Will Davies on 7/7/2017.
@@ -114,6 +115,22 @@ public class EventRanking extends Sortable<EventRanking> implements Serializable
 
     public void setRank(long rank) {
         this.rank = rank;
+    }
+
+    @Override
+    public String toString() {
+        return "EventRanking{" +
+                "teamKey='" + teamKey + '\'' +
+                ", dq=" + dq +
+                ", extraStats=" + Arrays.toString(extraStats) +
+                ", qualAverage=" + qualAverage +
+                ", matchesPlayed=" + matchesPlayed +
+                ", sortOrders=" + Arrays.toString(sortOrders) +
+                ", wins=" + wins +
+                ", ties=" + ties +
+                ", losses=" + losses +
+                ", rank=" + rank +
+                '}';
     }
 }
 

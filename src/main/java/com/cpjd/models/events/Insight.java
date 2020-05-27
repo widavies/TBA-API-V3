@@ -27,4 +27,12 @@ public class Insight {
     public void setPlayoff(HashMap<String, Object> playoff) {
         this.playoff = playoff;
     }
+
+    @Override
+    public String toString() {
+        return "Insight{" +
+                "qual=" + qual +
+                ", playoff=" + playoff +
+                '}';
+    }
 }
